@@ -1,8 +1,6 @@
 {
   "version": 2,
-  "buildCommand": "npm run build",
-  "outputDirectory": "ansh/port/dist",
-  "installCommand": "cd ansh/port && npm install",
+  "rootDirectory": "ansh/port",
   "framework": "vite",
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
