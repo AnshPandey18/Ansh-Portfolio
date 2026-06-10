@@ -1,6 +1,5 @@
 {
   "version": 2,
-  "rootDirectory": "ansh/port",
   "framework": "vite",
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
