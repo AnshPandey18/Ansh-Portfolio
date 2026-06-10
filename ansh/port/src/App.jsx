@@ -8,6 +8,7 @@ import Projects from './components/Projects'
 import Experience from './components/Experience'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
+import ParticleBackground from './components/ParticleBackground'
 
 function App() {
   const [darkMode, setDarkMode] = useState(true)
@@ -41,9 +42,10 @@ function App() {
   }
 
   return (
-    <div className={`min-h-screen ${darkMode ? 'bg-black text-white' : 'bg-white text-black'}`}>
+    <div className={`min-h-screen ${darkMode ? 'bg-black text-white' : 'bg-white text-black'} relative overflow-x-hidden`}>
+      <ParticleBackground />
       <Navigation />
-      <main>
+      <main className="relative z-10">
         <Hero />
         <About />
         <Skills />
@@ -57,4 +59,3 @@ function App() {
 }
 
 export default App
-
