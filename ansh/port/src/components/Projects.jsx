@@ -1,429 +1,265 @@
 import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { useInView } from 'framer-motion'
+import { motion, AnimatePresence, useInView } from 'framer-motion'
 import { useRef } from 'react'
 
 const Projects = () => {
   const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: '-100px' })
+  const isInView = useInView(ref, { once: true, margin: '-80px' })
   const [selectedProject, setSelectedProject] = useState(null)
-  const [hoveredProject, setHoveredProject] = useState(null)
 
-  // User's resume projects
   const projects = [
     {
       id: 1,
       title: 'CitySewa',
-      category: 'Development',
+      category: 'Full Stack',
       year: '2025',
       tech: ['React.js', 'Node.js', 'Express.js', 'MongoDB'],
       description: 'Built a platform to bridge communication between citizens and government authorities.\n• Implemented authentication, complaint submission, and real-time status tracking.\n• Created separate dashboards for citizens and authorities ensuring transparency.',
       role: 'Full Stack Developer',
-      images: ['https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&w=800&q=80'],
+      image: 'https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&w=800&q=80',
+      github: 'https://github.com/AnshPandey18/CitySewa',
       liveLink: '',
-      github: 'https://github.com/AnshPandey18/CitySewa', // Based on username AnshPandey18
-      color: '#0d9488',
+      accent: 'gold',
     },
     {
       id: 2,
       title: 'Trust Hire',
-      category: 'Development',
+      category: 'Full Stack',
       year: '2024',
       tech: ['React.js', 'Node.js', 'Express.js', 'MongoDB'],
       description: 'Developed a freelancing website aimed at reducing platform fees for freelancers.\n• Implemented job posting, bidding system, and freelancer profile management.\n• Designed backend APIs and integrated frontend using REST architecture.',
       role: 'Full Stack Developer',
-      images: ['https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80'],
-      liveLink: '',
+      image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80',
       github: 'https://github.com/AnshPandey18/Trust-Hire',
-      color: '#14b8a6',
+      liveLink: '',
+      accent: 'sky',
     },
     {
       id: 3,
-      title: 'Elegant AV Solution Platform',
-      category: 'Development',
+      title: 'Elegant AV Solution',
+      category: 'Full Stack',
       year: '2025',
       tech: ['React', 'Node.js', 'Express.js', 'MongoDB', 'Tailwind CSS'],
       description: 'Developed a digital platform for managing AV solutions and portable cabin services.\n• Implemented product management, inquiry handling, and scalable backend systems.\n• Digitized offline business workflows into scalable web-based systems.',
       role: 'Full Stack Developer & Designer',
-      images: ['/projects/elegant_av.png'],
-      liveLink: 'https://elegantavsolutionmain.vercel.app/',
-      github: 'https://github.com/AnshPandey18', // User's profile
-      color: '#0f766e',
-    },
-    {
-      id: 4,
-      title: 'Jaypee Digital Platform',
-      category: 'Development',
-      year: '2025',
-      tech: ['React.js', 'Node.js', 'Express.js', 'MongoDB', 'Tailwind CSS'],
-      description: 'Worked on frontend and backend optimization for digital service management.\n• Enhanced responsive UI and improved system performance.\n• Improved UI responsiveness and optimized backend performance.',
-      role: 'Full Stack Developer',
-      images: ['https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80'],
-      liveLink: '',
+      image: '/projects/elegant_av.png',
       github: 'https://github.com/AnshPandey18',
-      color: '#06b6d4',
+      liveLink: 'https://elegantavsolutionmain.vercel.app/',
+      accent: 'gold',
     },
+
   ]
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  }
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 60, rotateX: -30, scale: 0.8 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      rotateX: 0,
-      scale: 1,
-      transition: {
-        duration: 0.8,
-        ease: [0.6, -0.05, 0.01, 0.99],
-      },
-    },
-  }
-
   return (
-    <section id="projects" className="py-40 md:py-48 bg-black relative overflow-hidden">
-      {/* Enhanced Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-gray900 via-black to-gray900" />
-      
-      {/* Animated background orbs */}
-      {[1, 2].map((i) => (
-        <motion.div
-          key={i}
-          className="absolute rounded-full blur-3xl"
-          style={{
-            width: `${350 + i * 150}px`,
-            height: `${350 + i * 150}px`,
-            top: `${30 + i * 30}%`,
-            left: i % 2 === 0 ? '75%' : '15%',
-            background: `radial-gradient(circle, rgba(13, 148, 136, ${0.12 - i * 0.03}), transparent)`,
-          }}
-          animate={{
-            scale: [1, 1.4 + i * 0.1, 1],
-            x: [0, 50 + i * 20, 0],
-            y: [0, 30 + i * 20, 0],
-            opacity: [0.2, 0.5, 0.2],
-          }}
-          transition={{
-            duration: 10 + i * 2,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: i * 2,
-          }}
-        />
-      ))}
-
-      {/* Animated grid pattern */}
-      <div 
-        className="absolute inset-0 opacity-[0.04]"
-        style={{
-          backgroundImage: `
-            linear-gradient(rgba(13, 148, 136, 0.1) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(13, 148, 136, 0.1) 1px, transparent 1px)
-          `,
-          backgroundSize: '50px 50px',
-        }}
+    <section id="projects" className="py-32 md:py-40 relative overflow-hidden" style={{ background: 'var(--bg)' }}>
+      <div
+        className="absolute top-0 left-0 right-0 h-px pointer-events-none"
+        style={{ background: 'linear-gradient(90deg, transparent, rgba(147,197,253,0.15), transparent)' }}
+      />
+      <div
+        className="absolute right-0 top-1/4 w-96 h-96 pointer-events-none"
+        style={{ background: 'radial-gradient(circle, rgba(147,197,253,0.04) 0%, transparent 70%)', filter: 'blur(50px)' }}
       />
 
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 relative z-10">
+      <div ref={ref} className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+        {/* Heading */}
         <motion.div
-          ref={ref}
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: 24 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 1.2, ease: [0.6, -0.05, 0.01, 0.99] }}
+          transition={{ duration: 0.7 }}
+          className="mb-14"
         >
-          <motion.h2
-            className="text-6xl md:text-7xl lg:text-8xl font-black mb-8 text-center relative"
-            initial={{ opacity: 0, y: 50, scale: 0.9 }}
-            animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
-            transition={{ duration: 1.2, delay: 0.2, ease: [0.6, -0.05, 0.01, 0.99] }}
+          <span className="pill mb-4 inline-flex">Portfolio</span>
+          <h2
+            className="font-black"
+            style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', color: 'var(--text-1)' }}
           >
-            <span className="relative inline-block">
-              Featured <span className="gradient-text">Projects</span>
-              <motion.span
-                className="absolute -bottom-3 left-1/2 transform -translate-x-1/2 h-2 bg-gradient-to-r from-tealAccent via-tealLight to-tealAccent"
-                initial={{ width: 0 }}
-                animate={isInView ? { width: '400px' } : {}}
-                transition={{ duration: 1.2, delay: 0.4 }}
-              />
-            </span>
-          </motion.h2>
+            Featured <span className="gradient-text">Projects</span>
+          </h2>
+          <p className="mt-4 text-base" style={{ color: 'var(--text-2)' }}>
+            A selection of my recent full-stack web developments
+          </p>
+        </motion.div>
 
-          <motion.p
-            className="text-center text-gray400 mb-24 text-2xl font-light"
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 1, delay: 0.4 }}
-          >
-            A selection of my recent full stack web developments
-          </motion.p>
-
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate={isInView ? 'visible' : 'hidden'}
-            className="grid md:grid-cols-2 lg:grid-cols-4 gap-8"
-            style={{
-              perspective: '1000px',
-            }}
-          >
-            {projects.map((project, index) => (
-              <motion.div
-                key={project.id}
-                variants={itemVariants}
-                className="relative group cursor-pointer"
-                onClick={() => setSelectedProject(project)}
-                onMouseEnter={() => setHoveredProject(project.id)}
-                onMouseLeave={() => setHoveredProject(null)}
-                style={{
-                  transformStyle: 'preserve-3d',
-                }}
-              >
-                <motion.div
-                  className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray900 to-gray800 border border-gray700 h-[350px] preserve-3d"
-                  animate={{
-                    rotateY: hoveredProject === project.id ? 5 : 0,
-                    rotateX: hoveredProject === project.id ? -5 : 0,
-                    scale: hoveredProject === project.id ? 1.05 : 1,
-                    z: hoveredProject === project.id ? 50 : 0,
-                  }}
-                  transition={{ duration: 0.4, ease: 'easeOut' }}
-                  whileHover={{
-                    boxShadow: `0 20px 60px ${project.color}40`,
-                  }}
+        {/* Project grid */}
+        <div className="grid sm:grid-cols-2 gap-6">
+          {projects.map((project, index) => (
+            <motion.div
+              key={project.id}
+              initial={{ opacity: 0, y: 32 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              className="group cursor-pointer rounded-2xl overflow-hidden"
+              style={{
+                background: 'var(--surface2)',
+                border: '1px solid var(--border)',
+              }}
+              onClick={() => setSelectedProject(project)}
+              whileHover={{
+                borderColor: project.accent === 'gold' ? 'rgba(212,168,67,0.35)' : 'rgba(147,197,253,0.28)',
+                y: -4,
+              }}
+              transition={{ duration: 0.25 }}
+            >
+              {/* Image */}
+              <div className="relative h-52 overflow-hidden">
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                  loading="lazy"
+                />
+                {/* Overlay on hover */}
+                <div
+                  className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  style={{ background: 'rgba(10,13,20,0.7)' }}
                 >
-                  {/* Project Image/Placeholder */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-gray800 to-gray900">
-                    <div className="w-full h-full flex items-center justify-center relative">
-                      {project.images && project.images[0] ? (
-                        <img 
-                          src={project.images[0]} 
-                          alt={project.title} 
-                          className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
-                          loading="lazy"
-                        />
-                      ) : (
-                        <span className="text-gray500 text-xl z-10">{project.title}</span>
-                      )}
-                      <motion.div
-                        className="absolute inset-0"
-                        style={{
-                          background: `linear-gradient(135deg, ${project.color}20, transparent)`,
-                        }}
-                        animate={{
-                          opacity: hoveredProject === project.id ? [0.5, 0.8, 0.5] : 0.3,
-                        }}
-                        transition={{ duration: 2, repeat: Infinity }}
-                      />
-                    </div>
-                  </div>
-
-                  {/* 3D Overlay with tilt */}
-                  <motion.div
-                    className="absolute inset-0 glass-dark flex flex-col items-center justify-center p-8 opacity-0 group-hover:opacity-100 transition-opacity"
-                    style={{
-                      background: `linear-gradient(135deg, ${project.color}20, rgba(0,0,0,0.8))`,
-                      transform: 'translateZ(20px)',
-                    }}
-                  >
-                    <motion.h3
-                      className="text-3xl font-bold mb-3 text-white text-center"
-                      initial={{ y: 20, opacity: 0 }}
-                      whileHover={{ y: 0, opacity: 1 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      {project.title}
-                    </motion.h3>
-                    <p className="text-tealAccent mb-4 text-center">{project.category}</p>
-                    <motion.span
-                      className="text-tealAccent text-sm font-semibold flex items-center gap-2"
-                      animate={{
-                        x: hoveredProject === project.id ? [0, 5, 0] : 0,
-                      }}
-                      transition={{ duration: 1, repeat: Infinity }}
-                    >
-                      View Details
-                      <span>→</span>
-                    </motion.span>
-                  </motion.div>
-
-                  {/* Glow effect */}
-                  <motion.div
-                    className="absolute -inset-1 bg-gradient-to-r from-tealAccent to-tealLight rounded-2xl opacity-0 group-hover:opacity-20 blur-xl -z-10"
-                    transition={{ duration: 0.3 }}
-                  />
-                </motion.div>
-
-                {/* Floating category badge */}
-                <motion.div
-                  className="absolute -top-3 -right-3 px-4 py-2 glass-dark border border-tealAccent/50 rounded-lg text-sm font-semibold"
-                  animate={{
-                    y: hoveredProject === project.id ? [0, -5, 0] : 0,
-                    rotateZ: hoveredProject === project.id ? [0, 5, 0] : 0,
+                  <span className="text-sm font-semibold px-5 py-2 rounded-full" style={{ background: 'var(--gold)', color: '#0a0d14' }}>
+                    View Details
+                  </span>
+                </div>
+                {/* Category badge */}
+                <div
+                  className="absolute top-4 left-4 px-3 py-1 rounded-full text-xs font-bold"
+                  style={{
+                    background: 'rgba(10,13,20,0.8)',
+                    border: `1px solid ${project.accent === 'gold' ? 'rgba(212,168,67,0.4)' : 'rgba(147,197,253,0.35)'}`,
+                    color: project.accent === 'gold' ? 'var(--gold)' : 'var(--sky)',
+                    backdropFilter: 'blur(8px)',
                   }}
-                  transition={{ duration: 1.5, repeat: Infinity }}
                 >
                   {project.category}
-                </motion.div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </motion.div>
+                </div>
+                {/* Year */}
+                <div
+                  className="absolute top-4 right-4 text-xs font-semibold"
+                  style={{ color: 'var(--text-3)' }}
+                >
+                  {project.year}
+                </div>
+              </div>
+
+              {/* Info */}
+              <div className="p-6">
+                <h3 className="text-lg font-bold mb-2" style={{ color: 'var(--text-1)' }}>{project.title}</h3>
+                <p className="text-sm mb-4 line-clamp-2" style={{ color: 'var(--text-2)' }}>
+                  {project.description.split('\n')[0]}
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {project.tech.slice(0, 3).map(t => (
+                    <span
+                      key={t}
+                      className="text-xs px-2.5 py-1 rounded-lg font-medium"
+                      style={{
+                        background: 'var(--border)',
+                        color: 'var(--text-3)',
+                      }}
+                    >
+                      {t}
+                    </span>
+                  ))}
+                  {project.tech.length > 3 && (
+                    <span className="text-xs px-2.5 py-1 rounded-lg" style={{ color: 'var(--text-3)' }}>
+                      +{project.tech.length - 3}
+                    </span>
+                  )}
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
       </div>
 
-      {/* Enhanced 3D Modal */}
+      {/* Modal */}
       <AnimatePresence>
         {selectedProject && (
           <motion.div
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/95 backdrop-blur-md"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4"
+            style={{ background: 'rgba(10,13,20,0.9)', backdropFilter: 'blur(12px)' }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setSelectedProject(null)}
           >
             <motion.div
-              className="relative glass-dark rounded-2xl max-w-5xl w-full max-h-[90vh] overflow-y-auto border border-tealAccent/30"
-              initial={{ scale: 0.8, opacity: 0, rotateY: -90 }}
-              animate={{ scale: 1, opacity: 1, rotateY: 0 }}
-              exit={{ scale: 0.8, opacity: 0, rotateY: 90 }}
-              transition={{ duration: 0.5, ease: 'easeOut' }}
-              onClick={(e) => e.stopPropagation()}
+              className="relative w-full max-w-3xl max-h-[88vh] overflow-y-auto rounded-2xl"
               style={{
-                transformStyle: 'preserve-3d',
-                perspective: '1000px',
+                background: 'var(--surface)',
+                border: '1px solid var(--border)',
               }}
+              initial={{ scale: 0.9, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.92, opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              onClick={e => e.stopPropagation()}
             >
-              <motion.button
+              {/* Close */}
+              <button
                 onClick={() => setSelectedProject(null)}
-                className="absolute top-6 right-6 text-white hover:text-tealAccent transition-colors z-10 p-2 glass-dark rounded-full border border-gray-700"
-                whileHover={{ rotate: 90, scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                aria-label="Close modal"
+                className="absolute top-5 right-5 z-10 p-2 rounded-lg transition-colors"
+                style={{ background: 'var(--surface2)', color: 'var(--text-2)' }}
               >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
-              </motion.button>
+              </button>
 
-              <div className="p-8 md:p-12">
-                <motion.h2
-                  className="text-4xl md:text-5xl font-bold mb-4 gradient-text"
-                  initial={{ y: -20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.2 }}
-                >
-                  {selectedProject.title}
-                </motion.h2>
+              {/* Image */}
+              <div className="h-56 overflow-hidden rounded-t-2xl">
+                <img src={selectedProject.image} alt={selectedProject.title} className="w-full h-full object-cover" />
+              </div>
 
-                <div className="flex flex-wrap gap-3 mb-8">
-                  <span className="px-4 py-2 glass-dark border border-tealAccent/30 rounded-lg text-sm">
+              <div className="p-8">
+                <div className="flex flex-wrap gap-2 mb-4">
+                  <span className="px-3 py-1 rounded-full text-xs font-bold"
+                    style={{ background: 'rgba(212,168,67,0.12)', color: 'var(--gold)', border: '1px solid rgba(212,168,67,0.2)' }}>
                     {selectedProject.category}
                   </span>
-                  <span className="px-4 py-2 glass-dark border border-tealAccent/30 rounded-lg text-sm">
+                  <span className="px-3 py-1 rounded-full text-xs font-bold"
+                    style={{ background: 'var(--surface2)', color: 'var(--text-2)', border: '1px solid var(--border)' }}>
                     {selectedProject.year}
                   </span>
                 </div>
 
-                {selectedProject.images && selectedProject.images[0] && (
-                  <motion.div
-                    className="mb-8 rounded-xl overflow-hidden"
-                    initial={{ scale: 0.9, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ delay: 0.3 }}
-                  >
-                    <img
-                      src={selectedProject.images[0]}
-                      alt={selectedProject.title}
-                      className="w-full h-auto max-h-[450px] object-cover object-center rounded-lg mx-auto"
-                      loading="lazy"
-                    />
-                  </motion.div>
-                )}
+                <h2 className="text-3xl font-black mb-2" style={{ color: 'var(--text-1)' }}>{selectedProject.title}</h2>
+                <p className="text-sm font-semibold mb-5" style={{ color: 'var(--gold)' }}>{selectedProject.role}</p>
 
-                <div className="space-y-6">
-                  <motion.div
-                    initial={{ y: 20, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ delay: 0.4 }}
-                  >
-                    <h3 className="text-tealAccent font-bold mb-2 text-xl">Description</h3>
-                    <p className="text-gray-300 leading-relaxed text-lg" style={{ whiteSpace: 'pre-line' }}>{selectedProject.description}</p>
-                  </motion.div>
+                <p className="text-sm leading-relaxed mb-6" style={{ color: 'var(--text-2)', whiteSpace: 'pre-line' }}>
+                  {selectedProject.description}
+                </p>
 
-                  <motion.div
-                    initial={{ y: 20, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ delay: 0.5 }}
-                  >
-                    <h3 className="text-tealAccent font-bold mb-2 text-xl">Role</h3>
-                    <p className="text-gray-300">{selectedProject.role}</p>
-                  </motion.div>
+                <h4 className="text-xs font-bold uppercase tracking-wider mb-3" style={{ color: 'var(--text-3)' }}>Tech Stack</h4>
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {selectedProject.tech.map(t => (
+                    <span key={t} className="px-3 py-1.5 text-xs font-semibold rounded-lg"
+                      style={{ background: 'var(--surface2)', border: '1px solid var(--border)', color: 'var(--text-2)' }}>
+                      {t}
+                    </span>
+                  ))}
+                </div>
 
-                  <motion.div
-                    initial={{ y: 20, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ delay: 0.6 }}
-                  >
-                    <h3 className="text-tealAccent font-bold mb-4 text-xl">Technologies</h3>
-                    <div className="flex flex-wrap gap-3">
-                      {selectedProject.tech.map((tech) => (
-                        <span
-                          key={tech}
-                          className="px-4 py-2 glass-dark border border-gray-700 rounded-lg text-sm hover:border-tealAccent transition-colors"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                  </motion.div>
-
-                  {(selectedProject.liveLink || selectedProject.github) && (
-                    <div className="pt-6 border-t border-gray-800 flex flex-wrap gap-4 justify-start">
-                      {selectedProject.liveLink && (
-                        <a
-                          href={selectedProject.liveLink}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 px-6 py-3 bg-tealAccent text-white font-semibold rounded-xl hover:bg-opacity-90 transition-all duration-300 shadow-[0_0_15px_rgba(13,148,136,0.3)] hover:shadow-[0_0_20px_rgba(13,148,136,0.5)] transform hover:-translate-y-0.5"
-                        >
-                          Visit Live Site
-                          <svg
-                            className="w-4 h-4"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                            />
-                          </svg>
-                        </a>
-                      )}
-                      {selectedProject.github && (
-                        <a
-                          href={selectedProject.github}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 px-6 py-3 bg-gray-800 border border-gray-750 text-white font-semibold rounded-xl hover:bg-gray-700 transition-all duration-300 shadow-[0_0_15px_rgba(255,255,255,0.05)] transform hover:-translate-y-0.5"
-                        >
-                          View Code
-                          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                            <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd"/>
-                          </svg>
-                        </a>
-                      )}
-                    </div>
+                <div className="flex gap-3 flex-wrap pt-4" style={{ borderTop: '1px solid var(--border)' }}>
+                  {selectedProject.liveLink && (
+                    <a
+                      href={selectedProject.liveLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-5 py-2.5 text-sm font-semibold rounded-xl flex items-center gap-2"
+                      style={{ background: 'var(--gold)', color: '#0a0d14' }}
+                    >
+                      Live Site ↗
+                    </a>
+                  )}
+                  {selectedProject.github && (
+                    <a
+                      href={selectedProject.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-5 py-2.5 text-sm font-semibold rounded-xl flex items-center gap-2"
+                      style={{ background: 'var(--surface2)', border: '1px solid var(--border)', color: 'var(--text-1)' }}
+                    >
+                      GitHub →
+                    </a>
                   )}
                 </div>
               </div>

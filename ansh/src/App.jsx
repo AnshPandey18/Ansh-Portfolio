@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
 import Navigation from './components/Navigation'
 import Hero from './components/Hero'
 import About from './components/About'
@@ -9,7 +8,6 @@ import Experience from './components/Experience'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
 import ParticleBackground from './components/ParticleBackground'
-import Stats from './components/Stats'
 
 function App() {
   const [darkMode, setDarkMode] = useState(true)
@@ -37,17 +35,14 @@ function App() {
     }
   }, [darkMode, isLoading])
 
-  if (isLoading) {
-    return null
-  }
+  if (isLoading) return null
 
   return (
-    <div className={`min-h-screen ${darkMode ? 'bg-black text-white' : 'bg-white text-black'} relative overflow-x-hidden`}>
+    <div className="min-h-screen bg-[#050505] text-white relative overflow-x-hidden">
       <ParticleBackground />
       <Navigation />
       <main className="relative z-10">
         <Hero />
-        <Stats />
         <About />
         <Skills />
         <Projects />
@@ -60,4 +55,3 @@ function App() {
 }
 
 export default App
-

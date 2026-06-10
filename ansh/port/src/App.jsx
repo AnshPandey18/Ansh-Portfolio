@@ -42,9 +42,9 @@ function App() {
   }
 
   return (
-    <div className={`min-h-screen ${darkMode ? 'bg-black text-white' : 'bg-white text-black'} relative overflow-x-hidden`}>
-      <ParticleBackground />
-      <Navigation />
+    <div className="min-h-screen relative overflow-x-hidden" style={{ background: 'var(--bg)', color: 'var(--text-1)' }}>
+      <ParticleBackground darkMode={darkMode} />
+      <Navigation darkMode={darkMode} setDarkMode={setDarkMode} />
       <main className="relative z-10">
         <Hero />
         <About />

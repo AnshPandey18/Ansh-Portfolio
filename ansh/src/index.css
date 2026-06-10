@@ -2,140 +2,123 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ── Google Font ─────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
 :root {
-  --bg: #000000;
-  --fg: #ffffff;
-  --charcoal: #111214;
-  --slate: #374151;
-  --muted: #6b7280;
-  --accent: #0d9488;
+  --bg:           #03040a;
+  --bg-alt:       #060810;
+  --surface:      #0c0e18;
+  --surface-2:    #111420;
+  --border:       rgba(255,255,255,0.07);
+  --border-hover: rgba(20,184,166,0.45);
+  --accent:       #0d9488;
   --accent-light: #14b8a6;
-  --accent-dark: #0f766e;
+  --accent-glow:  rgba(13,148,136,0.18);
+  --muted:        #4b5563;
+  --muted-light:  #9ca3af;
+
+  /* aurora colours used in Hero */
+  --aurora-1: rgba(13,148,136,0.22);
+  --aurora-2: rgba(56,189,248,0.10);
+  --aurora-3: rgba(99,102,241,0.08);
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    --bg: #ffffff;
-    --fg: #000000;
-  }
-}
+* { margin:0; padding:0; box-sizing:border-box; }
 
-.dark {
-  --bg: #000000;
-  --fg: #ffffff;
-}
+html { scroll-behavior:smooth; overflow-x:hidden; }
 
-.light {
-  --bg: #ffffff;
-  --fg: #000000;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-  overflow-x: hidden;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
+@media (prefers-reduced-motion:reduce) {
+  *,*::before,*::after {
+    animation-duration:0.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:0.01ms !important;
+    scroll-behavior:auto !important;
   }
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: var(--bg);
-  color: var(--fg);
-  line-height: 1.6;
-  overflow-x: hidden;
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  background-color:var(--bg);
+  color:#f1f5f9;
+  line-height:1.65;
+  overflow-x:hidden;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* ── Scrollbar ───────────────────────────────────── */
+::-webkit-scrollbar { width:3px; }
+::-webkit-scrollbar-track { background:var(--bg); }
+::-webkit-scrollbar-thumb { background:var(--accent); border-radius:2px; }
+
+/* ── Fine dot-grid texture (reusable) ────────────── */
+.dot-grid {
+  background-image: radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px);
+  background-size: 28px 28px;
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--charcoal);
-}
-
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, var(--accent), var(--accent-dark));
-  border-radius: 5px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--accent-light);
-}
-
-/* Glass morphism utility */
+/* ── Glass surface ───────────────────────────────── */
 .glass {
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(12px) saturate(180%);
-  -webkit-backdrop-filter: blur(12px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  background: rgba(12,14,24,0.7);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  border: 1px solid var(--border);
 }
 
-.glass-dark {
-  background: linear-gradient(135deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3));
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05);
-}
-
-/* 3D transform utilities */
-.preserve-3d {
-  transform-style: preserve-3d;
-}
-
-.backface-hidden {
-  backface-visibility: hidden;
-}
-
-/* Gradient text */
+/* ── Gradient text ───────────────────────────────── */
 .gradient-text {
-  background: linear-gradient(135deg, var(--accent), var(--accent-light), var(--accent));
-  background-size: 200% 100%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: gradient-shift 5s ease infinite;
-  filter: drop-shadow(0 2px 4px rgba(13, 148, 136, 0.3));
+  background: linear-gradient(135deg,var(--accent),var(--accent-light));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
 }
 
-/* Animated gradient background */
-@keyframes gradient-shift {
-  0%, 100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
+/* ── Tech tag chip ───────────────────────────────── */
+.tag {
+  display:inline-block;
+  padding:0.2rem 0.65rem;
+  font-size:0.72rem;
+  font-weight:600;
+  letter-spacing:0.04em;
+  border:1px solid var(--border);
+  border-radius:4px;
+  color:var(--muted-light);
+  background:rgba(255,255,255,0.03);
+  transition:border-color 0.2s,color 0.2s,background 0.2s;
+}
+.tag:hover {
+  border-color:var(--accent);
+  color:var(--accent-light);
+  background:rgba(13,148,136,0.08);
 }
 
-.animated-gradient {
-  background-size: 200% 200%;
-  animation: gradient-shift 15s ease infinite;
+/* ── Section separator ───────────────────────────── */
+.section-sep {
+  width:100%;
+  height:1px;
+  background: linear-gradient(90deg,transparent,rgba(255,255,255,0.06),transparent);
 }
 
+/* ── Aurora keyframes (Hero background orbs) ─────── */
+@keyframes aurora-drift-1 {
+  0%,100% { transform:translate(0,0) scale(1); }
+  50%      { transform:translate(60px,-40px) scale(1.15); }
+}
+@keyframes aurora-drift-2 {
+  0%,100% { transform:translate(0,0) scale(1.05); }
+  50%      { transform:translate(-80px,50px) scale(0.9); }
+}
+@keyframes aurora-drift-3 {
+  0%,100% { transform:translate(0,0) scale(0.95); }
+  60%      { transform:translate(50px,60px) scale(1.2); }
+}
+@keyframes grid-scroll {
+  from { background-position:0 0; }
+  to   { background-position:28px 28px; }
+}
+
+.aurora-orb-1 { animation: aurora-drift-1 18s ease-in-out infinite; }
+.aurora-orb-2 { animation: aurora-drift-2 22s ease-in-out infinite; }
+.aurora-orb-3 { animation: aurora-drift-3 26s ease-in-out infinite; }
+.grid-animate { animation: grid-scroll 8s linear infinite; }
