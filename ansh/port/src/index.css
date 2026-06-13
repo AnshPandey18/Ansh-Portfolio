@@ -148,14 +148,19 @@ body::before {
 
 /* ═══════════════════════════════════════════════════
    GRADIENT TEXT — GOLD
+   NOTE: Only apply to block/inline-block elements,
+   NOT to individual animated letter spans.
 ═══════════════════════════════════════════════════ */
 .gradient-text {
-  background: linear-gradient(120deg, var(--gold-dark) 0%, var(--gold) 40%, var(--gold-light) 70%, var(--gold) 100%);
-  background-size: 200% 100%;
+  background: linear-gradient(110deg, #a87830 0%, #D4A24E 35%, #f0c060 60%, #D4A24E 80%, #a87830 100%);
+  background-size: 250% 100%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: shimmerText 5s ease infinite;
+  color: transparent;
+  animation: shimmerText 4s ease infinite;
+  /* Fallback if clip fails */
+  text-shadow: none;
 }
 .gradient-text-blue {
   background: linear-gradient(120deg, var(--sky-deep), var(--sky), var(--sky-dark));
@@ -258,8 +263,9 @@ section { transition: background-color 0.4s ease; }
    KEYFRAMES
 ═══════════════════════════════════════════════════ */
 @keyframes shimmerText {
-  0%,100% { background-position: 0% 50%; }
-  50%      { background-position: 100% 50%; }
+  0%   { background-position: 0% center; }
+  50%  { background-position: 100% center; }
+  100% { background-position: 0% center; }
 }
 @keyframes orbDrift1 {
   0%,100% { transform: translate(0,0) scale(1); }
