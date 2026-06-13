@@ -14,10 +14,11 @@ const About = () => {
 
   return (
     <section id="about" className="py-32 md:py-40 relative overflow-hidden" style={{ background: 'var(--surface)' }}>
+      <div className="bg-dots absolute inset-0 pointer-events-none opacity-30" aria-hidden />
       {/* subtle gold gradient top */}
       <div
         className="absolute top-0 left-0 right-0 h-px pointer-events-none"
-        style={{ background: 'linear-gradient(90deg, transparent, rgba(212,168,67,0.2), transparent)' }}
+        style={{ background: 'linear-gradient(90deg, transparent, rgba(212,162,78,0.25), transparent)' }}
       />
       <div
         className="absolute top-0 right-0 w-96 h-96 rounded-full pointer-events-none"
@@ -122,7 +123,7 @@ const About = () => {
             <motion.div {...fadeUp(0.1)}>
               <span className="pill mb-4 inline-flex">About Me</span>
               <h2
-                className="font-black leading-tight"
+                className="font-display font-black leading-tight"
                 style={{ fontSize: 'clamp(2.2rem, 5vw, 4rem)', color: 'var(--text-1)' }}
               >
                 A visual storyteller <br />

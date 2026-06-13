@@ -66,7 +66,7 @@ const Navigation = ({ darkMode, setDarkMode }) => {
           <motion.a
             href="#hero"
             onClick={(e) => { e.preventDefault(); scrollToSection('#hero') }}
-            className="text-xl font-black tracking-tight select-none"
+            className="text-xl font-display font-black tracking-tight select-none"
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
           >

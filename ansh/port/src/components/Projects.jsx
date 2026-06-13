@@ -51,10 +51,11 @@ const Projects = () => {
   ]
 
   return (
-    <section id="projects" className="py-32 md:py-40 relative overflow-hidden" style={{ background: 'var(--bg)' }}>
+    <section id="projects" className="py-32 md:py-40 relative overflow-hidden" style={{ background: 'var(--surface)' }}>
+      <div className="bg-dots absolute inset-0 pointer-events-none opacity-25" aria-hidden />
       <div
         className="absolute top-0 left-0 right-0 h-px pointer-events-none"
-        style={{ background: 'linear-gradient(90deg, transparent, rgba(147,197,253,0.15), transparent)' }}
+        style={{ background: 'linear-gradient(90deg, transparent, rgba(126,184,247,0.2), transparent)' }}
       />
       <div
         className="absolute right-0 top-1/4 w-96 h-96 pointer-events-none"
@@ -71,7 +72,7 @@ const Projects = () => {
         >
           <span className="pill mb-4 inline-flex">Portfolio</span>
           <h2
-            className="font-black"
+            className="font-display font-black"
             style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', color: 'var(--text-1)' }}
           >
             Featured <span className="gradient-text">Projects</span>

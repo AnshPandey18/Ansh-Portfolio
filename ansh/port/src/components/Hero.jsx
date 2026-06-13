@@ -1,51 +1,55 @@
-import { motion, useInView } from 'framer-motion'
+import { motion, useScroll, useTransform } from 'framer-motion'
 import { useEffect, useState, useRef } from 'react'
 
-const Hero = () => {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
-  const heroRef = useRef(null)
+/* Letter-by-letter reveal */
+function SplitText({ text, className, style, delay = 0, stagger = 0.04 }) {
+  const words = text.split(' ')
+  return (
+    <span className={className} style={style}>
+      {words.map((word, wi) => (
+        <span key={wi} className="inline-block overflow-hidden" style={{ marginRight:'0.28em' }}>
+          {word.split('').map((char, ci) => (
+            <motion.span
+              key={ci}
+              className="inline-block"
+              initial={{ y: '110%', opacity: 0 }}
+              animate={{ y: '0%', opacity: 1 }}
+              transition={{
+                duration: 0.65,
+                delay: delay + (wi * 6 + ci) * stagger,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+            >
+              {char}
+            </motion.span>
+          ))}
+        </span>
+      ))}
+    </span>
+  )
+}
 
+const PHOTOS = [
+  '/ansh-portrait.jpg',
+  '/ansh-portrait.png',
+  '/hero-character.png',
+]
+
+export default function Hero() {
+  const heroRef = useRef(null)
+  const [slide, setSlide] = useState(0)
+  const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] })
+  const bgScale = useTransform(scrollYProgress, [0, 1], [1, 1.18])    // Ken Burns
+  const bgY     = useTransform(scrollYProgress, [0, 1], ['0%', '8%'])  // parallax
+  const opacity = useTransform(scrollYProgress, [0, 0.6], [1, 0])
+
+  // Slideshow cycling
   useEffect(() => {
-    let ticking = false
-    const handleMouseMove = (e) => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          const rect = heroRef.current?.getBoundingClientRect()
-          if (rect) {
-            setMousePosition({
-              x: ((e.clientX - rect.left) / rect.width - 0.5) * 24,
-              y: ((e.clientY - rect.top) / rect.height - 0.5) * 24,
-            })
-          }
-          ticking = false
-        })
-        ticking = true
-      }
-    }
-    window.addEventListener('mousemove', handleMouseMove, { passive: true })
-    return () => window.removeEventListener('mousemove', handleMouseMove)
+    const id = setInterval(() => setSlide(s => (s + 1) % PHOTOS.length), 5000)
+    return () => clearInterval(id)
   }, [])
 
-  const scrollToSection = (href) => {
-    document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' })
-  }
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.1, delayChildren: 0.2 },
-    },
-  }
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 32 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] },
-    },
-  }
+  const scrollTo = (href) => document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' })
 
   return (
     <section
@@ -54,270 +58,204 @@ const Hero = () => {
       className="relative min-h-screen flex items-center overflow-hidden"
       style={{ background: 'var(--bg)' }}
     >
-      {/* Subtle radial glow driven by mouse */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background: `radial-gradient(ellipse 60% 60% at ${50 + mousePosition.x * 0.4}% ${50 + mousePosition.y * 0.4}%, rgba(212,168,67,0.07) 0%, transparent 70%)`,
-          transition: 'background 0.1s linear',
-        }}
-      />
-
-      {/* Blue counter-glow */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background: `radial-gradient(ellipse 40% 50% at ${72 + mousePosition.x * 0.2}% ${30 + mousePosition.y * 0.2}%, rgba(147,197,253,0.05) 0%, transparent 65%)`,
-        }}
-      />
-
-      {/* Fine dot grid */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage: 'radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px)',
-          backgroundSize: '32px 32px',
-        }}
-      />
-
-      {/* Slow drifting ambient orbs */}
+      {/* ── Slideshow / Ken Burns background ─── */}
       <motion.div
-        className="absolute rounded-full pointer-events-none"
-        style={{
-          width: 600, height: 600,
-          top: '-10%', right: '-5%',
-          background: 'radial-gradient(circle, rgba(212,168,67,0.06) 0%, transparent 70%)',
-          filter: 'blur(60px)',
-        }}
-        animate={{ x: [0, 30, 0], y: [0, 20, 0] }}
-        transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut' }}
-      />
+        className="absolute inset-0 pointer-events-none"
+        style={{ scale: bgScale, y: bgY }}
+      >
+        {PHOTOS.map((src, i) => (
+          <motion.div
+            key={src}
+            className="absolute inset-0"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: slide === i ? 1 : 0 }}
+            transition={{ duration: 1.8, ease: 'easeInOut' }}
+          >
+            <img
+              src={src}
+              alt=""
+              className="w-full h-full object-cover object-center"
+              style={{ filter: 'brightness(0.22) saturate(0.6)' }}
+              aria-hidden
+            />
+          </motion.div>
+        ))}
+        {/* Gradient overlay on top of images */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background: 'linear-gradient(to right, rgba(10,10,15,0.92) 45%, rgba(10,10,15,0.55) 100%)',
+          }}
+        />
+        <div
+          className="absolute inset-0"
+          style={{
+            background: 'linear-gradient(to top, rgba(10,10,15,0.8) 0%, transparent 40%)',
+          }}
+        />
+      </motion.div>
+
+      {/* ── Aurora orbs ──────────────────────── */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden>
+        <div className="orb-drift-1 absolute will-change-transform" style={{
+          width:700, height:700, top:'-15%', right:'-10%',
+          background: 'radial-gradient(circle, rgba(212,162,78,0.14) 0%, rgba(124,58,237,0.08) 50%, transparent 70%)',
+          filter:'blur(80px)',
+        }} />
+        <div className="orb-drift-2 absolute will-change-transform" style={{
+          width:500, height:500, bottom:'0%', left:'-8%',
+          background: 'radial-gradient(circle, rgba(124,58,237,0.12) 0%, rgba(212,162,78,0.06) 50%, transparent 70%)',
+          filter:'blur(70px)',
+        }} />
+        <div className="orb-drift-3 absolute will-change-transform" style={{
+          width:400, height:400, top:'40%', left:'40%',
+          background: 'radial-gradient(circle, rgba(126,184,247,0.06) 0%, transparent 65%)',
+          filter:'blur(60px)',
+        }} />
+      </div>
+
+      {/* ── Dot grid ─────────────────────────── */}
+      <div className="bg-dots absolute inset-0 pointer-events-none opacity-40" aria-hidden />
+
+      {/* ── Content ──────────────────────────── */}
       <motion.div
-        className="absolute rounded-full pointer-events-none"
-        style={{
-          width: 480, height: 480,
-          bottom: '5%', left: '-5%',
-          background: 'radial-gradient(circle, rgba(147,197,253,0.05) 0%, transparent 70%)',
-          filter: 'blur(60px)',
-        }}
-        animate={{ x: [0, -20, 0], y: [0, -25, 0] }}
-        transition={{ duration: 24, repeat: Infinity, ease: 'easeInOut', delay: 4 }}
-      />
+        className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pt-32 pb-20"
+        style={{ opacity }}
+      >
+        <div className="max-w-3xl space-y-8">
 
-      {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 w-full pt-24 pb-16">
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="grid md:grid-cols-2 gap-12 md:gap-16 items-center"
-        >
-          {/* Left column */}
-          <div className="space-y-8">
+          {/* Eyebrow */}
+          <motion.div
+            initial={{ opacity:0, y:20 }}
+            animate={{ opacity:1, y:0 }}
+            transition={{ duration:0.6, delay:0.2 }}
+          >
+            <span className="pill">
+              <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+              Available for work
+            </span>
+          </motion.div>
 
-            {/* Eyebrow pill */}
-            <motion.div variants={itemVariants}>
-              <span className="pill">
-                <span
-                  className="w-1.5 h-1.5 rounded-full"
-                  style={{ background: 'var(--gold)', display: 'inline-block' }}
-                />
-                Available for work
-              </span>
-            </motion.div>
-
-            {/* Name */}
-            <motion.div variants={itemVariants}>
-              <h1
-                className="font-black leading-none tracking-tight"
-                style={{ fontSize: 'clamp(3rem, 8vw, 6.5rem)' }}
-              >
-                <span style={{ color: 'var(--text-1)' }}>Ansh</span>
-                <br />
-                <span className="gradient-text">Pandey</span>
-              </h1>
-            </motion.div>
-
-            {/* Role strip */}
-            <motion.p
-              variants={itemVariants}
-              className="text-base font-medium tracking-widest uppercase"
-              style={{ color: 'var(--sky)', letterSpacing: '0.12em' }}
+          {/* Name — huge display font with letter reveal */}
+          <div>
+            <h1
+              className="font-display font-black leading-none tracking-tight"
+              style={{ fontSize:'clamp(3.8rem,11vw,8.5rem)', lineHeight:0.93 }}
             >
-              Photographer · Videographer · Developer · Lead Speaker
-            </motion.p>
-
-            {/* Bio */}
-            <motion.p
-              variants={itemVariants}
-              className="text-lg leading-relaxed max-w-md"
-              style={{ color: 'var(--text-2)' }}
-            >
-              I craft immersive digital experiences where photography, visual storytelling,
-              and clean front-end engineering meet.
-            </motion.p>
-
-            {/* Buttons */}
-            <motion.div variants={itemVariants} className="flex flex-wrap gap-4">
-              <motion.button
-                onClick={() => scrollToSection('#projects')}
-                className="px-7 py-3.5 font-semibold text-sm rounded-xl"
-                style={{
-                  background: 'var(--gold)',
-                  color: '#0a0d14',
-                }}
-                whileHover={{ scale: 1.05, boxShadow: '0 8px 32px rgba(212,168,67,0.35)' }}
-                whileTap={{ scale: 0.97 }}
-              >
-                View Projects →
-              </motion.button>
-
-              <motion.button
-                onClick={() => scrollToSection('#contact')}
-                className="px-7 py-3.5 font-semibold text-sm rounded-xl"
-                style={{
-                  border: '1px solid rgba(212,168,67,0.35)',
-                  color: 'var(--gold)',
-                  background: 'transparent',
-                }}
-                whileHover={{
-                  scale: 1.05,
-                  background: 'rgba(212,168,67,0.08)',
-                  borderColor: 'rgba(212,168,67,0.6)',
-                }}
-                whileTap={{ scale: 0.97 }}
-              >
-                Contact Me
-              </motion.button>
-
-              <motion.a
-                href="https://drive.google.com/file/d/1nZgZPh-rr3AO2vpl5zwiAyCGD8UqzzdZ/view?usp=drive_link"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-7 py-3.5 font-semibold text-sm rounded-xl flex items-center gap-2"
-                style={{
-                  border: '1px solid rgba(147,197,253,0.25)',
-                  color: 'var(--sky)',
-                  background: 'transparent',
-                }}
-                whileHover={{
-                  scale: 1.05,
-                  background: 'rgba(147,197,253,0.07)',
-                  borderColor: 'rgba(147,197,253,0.45)',
-                }}
-                whileTap={{ scale: 0.97 }}
-              >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
-                Resume
-              </motion.a>
-            </motion.div>
-
-            {/* Stats row */}
-            <motion.div variants={itemVariants} className="flex gap-10 pt-4">
-              {[
-                { value: '10+', label: 'Projects' },
-                { value: '2+', label: 'Years Exp.' },
-                { value: '3+', label: 'Internships' },
-              ].map((s) => (
-                <div key={s.label}>
-                  <p className="text-2xl font-black" style={{ color: 'var(--gold)' }}>{s.value}</p>
-                  <p className="text-xs font-medium uppercase tracking-wider" style={{ color: 'var(--text-3)' }}>{s.label}</p>
-                </div>
-              ))}
-            </motion.div>
+              <SplitText
+                text="Ansh"
+                className="block text-white"
+                delay={0.3}
+                stagger={0.05}
+              />
+              <SplitText
+                text="Pandey"
+                className="block gradient-text"
+                delay={0.5}
+                stagger={0.05}
+              />
+            </h1>
           </div>
 
-          {/* Right — image panel */}
-          <motion.div
-            className="relative hidden md:flex items-center justify-center"
-            initial={{ opacity: 0, x: 60 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1, delay: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+          {/* Role strip */}
+          <motion.p
+            initial={{ opacity:0, x:-24 }}
+            animate={{ opacity:1, x:0 }}
+            transition={{ duration:0.7, delay:1.0 }}
+            className="text-sm font-semibold tracking-[0.18em] uppercase"
+            style={{ color:'var(--sky)' }}
           >
-            {/* Decorative ring */}
-            <div
-              className="absolute rounded-full pointer-events-none"
-              style={{
-                width: 420, height: 420,
-                border: '1px solid rgba(212,168,67,0.12)',
-              }}
-            />
-            <div
-              className="absolute rounded-full pointer-events-none"
-              style={{
-                width: 520, height: 520,
-                border: '1px solid rgba(147,197,253,0.07)',
-              }}
-            />
+            Photographer · Videographer · Developer · Lead Speaker
+          </motion.p>
 
-            {/* Gold glow behind */}
-            <div
-              className="absolute pointer-events-none"
-              style={{
-                width: 360, height: 360,
-                background: 'radial-gradient(circle, rgba(212,168,67,0.12) 0%, transparent 70%)',
-                filter: 'blur(40px)',
-              }}
-            />
+          {/* Bio */}
+          <motion.p
+            initial={{ opacity:0, y:16 }}
+            animate={{ opacity:1, y:0 }}
+            transition={{ duration:0.7, delay:1.15 }}
+            className="text-lg leading-relaxed max-w-lg"
+            style={{ color:'var(--text-2)' }}
+          >
+            I craft immersive digital experiences where photography, visual storytelling,
+            and clean front-end engineering meet — built to win clients.
+          </motion.p>
 
-            <motion.div
-              animate={{ y: [0, -16, 0] }}
-              transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
-              style={{
-                transform: `perspective(1400px) rotateY(${mousePosition.x * 0.08}deg) rotateX(${-mousePosition.y * 0.08}deg)`,
-              }}
+          {/* CTA Buttons */}
+          <motion.div
+            initial={{ opacity:0, y:16 }}
+            animate={{ opacity:1, y:0 }}
+            transition={{ duration:0.7, delay:1.3 }}
+            className="flex flex-wrap gap-4"
+          >
+            <motion.button
+              onClick={() => scrollTo('#projects')}
+              className="px-8 py-3.5 font-bold text-sm rounded-xl"
+              style={{ background:'var(--gold)', color:'#0A0A0F',
+                boxShadow:'0 0 0 rgba(212,162,78,0)' }}
+              whileHover={{ scale:1.05, boxShadow:'0 0 36px rgba(212,162,78,0.55)' }}
+              whileTap={{ scale:0.96 }}
             >
-              <motion.img
-                src="/hero-character.png"
-                alt="Ansh Pandey"
-                className="relative z-10 max-w-sm w-full mx-auto"
-                style={{
-                  filter: 'drop-shadow(0 0 40px rgba(212,168,67,0.3)) drop-shadow(0 0 80px rgba(147,197,253,0.15))',
-                }}
-                initial={{ opacity: 0, scale: 0.85 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 1, delay: 0.7 }}
-              />
-            </motion.div>
+              View Projects →
+            </motion.button>
 
-            {/* Floating micro badges */}
+            <motion.button
+              onClick={() => scrollTo('#contact')}
+              className="px-8 py-3.5 font-bold text-sm rounded-xl"
+              style={{ border:'1px solid rgba(212,162,78,0.4)', color:'var(--gold)', background:'transparent' }}
+              whileHover={{ scale:1.05, background:'rgba(212,162,78,0.09)', borderColor:'rgba(212,162,78,0.7)' }}
+              whileTap={{ scale:0.96 }}
+            >
+              Contact Me
+            </motion.button>
+
+            <motion.a
+              href="https://drive.google.com/file/d/1nZgZPh-rr3AO2vpl5zwiAyCGD8UqzzdZ/view?usp=drive_link"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-8 py-3.5 font-bold text-sm rounded-xl flex items-center gap-2"
+              style={{ border:'1px solid rgba(126,184,247,0.3)', color:'var(--sky)', background:'transparent' }}
+              whileHover={{ scale:1.05, background:'rgba(126,184,247,0.08)', borderColor:'rgba(126,184,247,0.6)' }}
+              whileTap={{ scale:0.96 }}
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              Resume
+            </motion.a>
+          </motion.div>
+
+          {/* Stats */}
+          <motion.div
+            initial={{ opacity:0 }}
+            animate={{ opacity:1 }}
+            transition={{ delay:1.55, duration:0.7 }}
+            className="flex flex-wrap gap-10 pt-6"
+            style={{ borderTop:'1px solid rgba(255,255,255,0.06)' }}
+          >
             {[
-              { label: 'Full Stack Dev', pos: 'top-8 left-0', accent: 'gold' },
-              { label: 'Photographer', pos: 'bottom-16 right-0', accent: 'sky' },
-            ].map((b) => (
-              <motion.div
-                key={b.label}
-                className={`absolute ${b.pos} glass rounded-xl px-4 py-2.5 pointer-events-none`}
-                style={{
-                  border: `1px solid rgba(${b.accent === 'gold' ? '212,168,67' : '147,197,253'},0.25)`,
-                }}
-                animate={{ y: [0, -6, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: b.accent === 'sky' ? 2 : 0 }}
-              >
-                <p className="text-xs font-semibold" style={{ color: b.accent === 'gold' ? 'var(--gold)' : 'var(--sky)' }}>
-                  {b.label}
-                </p>
-              </motion.div>
+              { v:'10+', l:'Projects' },
+              { v:'2+',  l:'Yrs Exp.' },
+              { v:'3+',  l:'Internships' },
+            ].map(s => (
+              <div key={s.l}>
+                <p className="text-3xl font-display font-black" style={{ color:'var(--gold)' }}>{s.v}</p>
+                <p className="text-xs font-medium uppercase tracking-wider mt-0.5" style={{ color:'var(--text-3)' }}>{s.l}</p>
+              </div>
             ))}
           </motion.div>
-        </motion.div>
-      </div>
+        </div>
+      </motion.div>
 
       {/* Scroll cue */}
       <motion.div
         className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2"
-        animate={{ y: [0, 10, 0] }}
-        transition={{ duration: 2.5, repeat: Infinity }}
+        animate={{ y:[0,10,0] }}
+        transition={{ duration:2.5, repeat:Infinity, ease:'easeInOut' }}
+        style={{ opacity:0.5 }}
       >
-        <span className="text-xs uppercase tracking-widest" style={{ color: 'var(--text-3)' }}>Scroll</span>
-        <svg className="w-4 h-4" style={{ color: 'var(--gold)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-        </svg>
+        <div className="w-px h-10" style={{ background:'linear-gradient(to bottom, transparent, var(--gold))' }} />
+        <span className="text-[9px] uppercase tracking-[0.22em]" style={{ color:'var(--text-3)' }}>scroll</span>
       </motion.div>
     </section>
   )
 }
-
-export default Hero

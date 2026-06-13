@@ -49,9 +49,10 @@ const Experience = () => {
 
   return (
     <section id="experience" className="py-32 md:py-40 relative overflow-hidden" style={{ background: 'var(--surface)' }}>
+      <div className="bg-dots absolute inset-0 pointer-events-none opacity-25" aria-hidden />
       <div
         className="absolute top-0 left-0 right-0 h-px pointer-events-none"
-        style={{ background: 'linear-gradient(90deg, transparent, rgba(212,168,67,0.2), transparent)' }}
+        style={{ background: 'linear-gradient(90deg, transparent, rgba(212,162,78,0.22), transparent)' }}
       />
       <div
         className="absolute right-0 bottom-1/4 w-80 h-80 pointer-events-none"
@@ -68,7 +69,7 @@ const Experience = () => {
         >
           <span className="pill mb-4 inline-flex">Timeline</span>
           <h2
-            className="font-black"
+            className="font-display font-black"
             style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', color: 'var(--text-1)' }}
           >
             Experience &amp; <span className="gradient-text">Education</span>
