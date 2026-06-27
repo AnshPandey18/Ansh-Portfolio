@@ -1,188 +1,173 @@
-import { motion, useInView } from 'framer-motion'
-import { useRef } from 'react'
+import { motion } from 'framer-motion'
 
-/* ── Tech items for the infinite marquee ──────── */
-const TECH = [
-  'React.js','Node.js','Express.js','MongoDB','MySQL','Tailwind CSS',
-  'JavaScript','TypeScript','HTML5','CSS3','Python','Java','C++','REST APIs',
-  'JWT','GitHub','Postman','Photoshop','Lightroom','Premiere Pro',
-  // duplicate set for seamless loop
-  'React.js','Node.js','Express.js','MongoDB','MySQL','Tailwind CSS',
-  'JavaScript','TypeScript','HTML5','CSS3','Python','Java','C++','REST APIs',
-  'JWT','GitHub','Postman','Photoshop','Lightroom','Premiere Pro',
+const fadeUp = (delay = 0) => ({
+  initial: { opacity: 0, y: 20 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: '-60px' },
+  transition: { duration: 0.55, delay, ease: [0.22, 1, 0.36, 1] },
+})
+
+const CORE = [
+  { name: 'Development',   pct: 90, bg: '#b9f0c0' },
+  { name: 'Photography',   pct: 90, bg: '#b7eaf6' },
+  { name: 'Videography',   pct: 85, bg: '#fae9ff' },
+  { name: 'Photo Editing', pct: 88, bg: '#fef3c8' },
+  { name: 'Public Speaking', pct: 85, bg: '#f5d1fe' },
 ]
 
-const coreSkills = [
-  { name:'Development',   level:90, color:'gold' },
-  { name:'Photography',   level:90, color:'sky'  },
-  { name:'Videography',   level:85, color:'sky'  },
-  { name:'Photo Editing', level:88, color:'gold' },
-  { name:'Lead Speaker',  level:85, color:'sky'  },
+const CATS = [
+  { title: 'Languages',    items: ['C', 'C++', 'Java', 'JavaScript', 'Python'],         bg: '#fef3c8' },
+  { title: 'Frontend',     items: ['HTML5', 'CSS3', 'React.js', 'Tailwind CSS'],        bg: '#d2fae5' },
+  { title: 'Backend',      items: ['Node.js', 'Express.js', 'REST APIs', 'JWT'],        bg: '#fae9ff' },
+  { title: 'Database',     items: ['MongoDB', 'MySQL', 'PostgreSQL'],                   bg: '#f5d1fe' },
+  { title: 'Dev Tools',    items: ['VS Code', 'GitHub', 'Postman', 'Photoshop', 'Lightroom'], bg: '#b7eaf6' },
+  { title: 'Coursework',   items: ['DBMS', 'OOPS', 'OS', 'Computer Networks'],          bg: '#b9f0c0' },
 ]
 
-const skillCategories = [
-  { title:'Languages', items:['C','C++','Java','JavaScript','Python'], accent:'gold' },
-  { title:'Frontend',  items:['HTML5','CSS3','React.js','Tailwind CSS'], accent:'sky' },
-  { title:'Backend',   items:['Node.js','Express.js','REST APIs','JWT'], accent:'gold' },
-  { title:'Database',  items:['MongoDB','MySQL','PostgreSQL'], accent:'sky' },
-  { title:'Dev Tools', items:['VS Code','GitHub','Postman','Photoshop','Lightroom'], accent:'gold' },
-  { title:'Coursework',items:['DBMS','OOPS','OS','Computer Networks'], accent:'sky' },
+const MARQUEE_ITEMS = [
+  'React.js', 'Node.js', 'MongoDB', 'MySQL', 'Tailwind CSS', 'JavaScript',
+  'HTML5', 'CSS3', 'Python', 'Java', 'C++', 'REST APIs', 'Git', 'Photoshop', 'Lightroom', 'Premiere Pro',
+  'React.js', 'Node.js', 'MongoDB', 'MySQL', 'Tailwind CSS', 'JavaScript',
+  'HTML5', 'CSS3', 'Python', 'Java', 'C++', 'REST APIs', 'Git', 'Photoshop', 'Lightroom', 'Premiere Pro',
 ]
+
+function SkillBar({ name, pct, bg, delay }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay, ease: [0.22, 1, 0.36, 1] }}
+      style={{
+        background: bg,
+        border: '1px solid #000',
+        borderRadius: 12,
+        padding: '16px 20px',
+        boxShadow: 'rgb(10,10,13) 2px 2px 0px 0px',
+      }}
+    >
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
+        <span style={{ fontWeight: 700, fontSize: 15, color: '#000' }}>{name}</span>
+        <span style={{ fontWeight: 500, fontSize: 13, color: '#000' }}>{pct}%</span>
+      </div>
+      <div style={{ height: 8, background: 'rgba(0,0,0,0.12)', borderRadius: 100, overflow: 'hidden' }}>
+        <motion.div
+          style={{ height: '100%', background: '#000', borderRadius: 100 }}
+          initial={{ width: 0 }}
+          whileInView={{ width: `${pct}%` }}
+          viewport={{ once: true }}
+          transition={{ duration: 1.1, delay: delay + 0.2, ease: 'easeOut' }}
+        />
+      </div>
+    </motion.div>
+  )
+}
 
 export default function Skills() {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once:true, margin:'-80px' })
-
   return (
-    <section id="skills" className="py-32 md:py-40 relative overflow-hidden" style={{ background:'var(--bg)' }}>
-      {/* Separator */}
-      <div className="absolute top-0 inset-x-0 h-px" style={{ background:'linear-gradient(90deg,transparent,rgba(126,184,247,0.18),transparent)' }} />
+    <section id="skills" style={{ background: '#f5f5f5', padding: '80px 0' }}>
+      <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 24px' }}>
 
-      {/* Ambient glow */}
-      <div className="absolute left-0 top-1/3 w-96 h-96 pointer-events-none orb-drift-2 will-change-transform" style={{
-        background:'radial-gradient(circle, rgba(124,58,237,0.09) 0%, transparent 70%)', filter:'blur(60px)',
-      }} />
-      <div className="absolute right-0 bottom-1/4 w-80 h-80 pointer-events-none" style={{
-        background:'radial-gradient(circle, rgba(212,162,78,0.07) 0%, transparent 70%)', filter:'blur(50px)',
-      }} />
-
-      <div className="bg-dots absolute inset-0 pointer-events-none opacity-30" aria-hidden />
-
-      <div ref={ref} className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
-        {/* Heading */}
-        <motion.div
-          initial={{ opacity:0, y:28 }}
-          animate={isInView ? { opacity:1, y:0 } : {}}
-          transition={{ duration:0.7 }}
-          className="mb-16 md:mb-20"
-        >
-          <span className="pill mb-4 inline-flex">Expertise</span>
-          <h2 className="font-display font-black" style={{ fontSize:'clamp(2rem,5vw,3.5rem)', color:'var(--text-1)' }}>
-            Skills & <span className="gradient-text">Expertise</span>
-          </h2>
-          <p className="mt-3 text-base max-w-md" style={{ color:'var(--text-2)' }}>
-            A comprehensive overview of my technical and creative abilities
-          </p>
+        {/* Eyebrow */}
+        <motion.div {...fadeUp(0)} className="section-eyebrow">
+          <span className="chip">Skills & Expertise</span>
         </motion.div>
 
+        <motion.h2 {...fadeUp(0.05)} style={{
+          fontWeight: 700, fontSize: 'clamp(32px,5vw,48px)', letterSpacing: '-0.96px',
+          lineHeight: 1.16, color: '#000', textAlign: 'center', maxWidth: 560, margin: '0 auto 12px',
+        }}>
+          What I bring to the table
+        </motion.h2>
+        <motion.p {...fadeUp(0.1)} style={{
+          fontWeight: 500, fontSize: 16, color: '#737373', textAlign: 'center', maxWidth: 440,
+          margin: '0 auto 56px', lineHeight: 1.6,
+        }}>
+          A mix of creative and technical skills built over years of real projects.
+        </motion.p>
+
         {/* Core skill bars */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-5 mb-20">
-          {coreSkills.map((skill, i) => (
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 12, marginBottom: 56 }}>
+          {CORE.map((s, i) => (
+            <SkillBar key={s.name} name={s.name} pct={s.pct} bg={s.bg} delay={i * 0.08} />
+          ))}
+        </div>
+
+        {/* Tech category grid */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 16, marginBottom: 48 }}>
+          {CATS.map((cat, ci) => (
             <motion.div
-              key={skill.name}
-              initial={{ opacity:0, y:24 }}
-              animate={isInView ? { opacity:1, y:0 } : {}}
-              transition={{ duration:0.6, delay:i*0.08 }}
-              className="p-5 rounded-2xl group cursor-default transition-all duration-250"
-              style={{ background:'var(--surface2)', border:'1px solid var(--border)' }}
-              onMouseEnter={e => {
-                e.currentTarget.style.background = skill.color==='gold'?'rgba(212,162,78,0.08)':'rgba(126,184,247,0.07)'
-                e.currentTarget.style.borderColor= skill.color==='gold'?'rgba(212,162,78,0.35)':'rgba(126,184,247,0.3)'
-                e.currentTarget.style.transform  = 'translateY(-4px)'
-                e.currentTarget.style.boxShadow  = skill.color==='gold'
-                  ?'0 12px 36px rgba(212,162,78,0.12)':'0 12px 36px rgba(126,184,247,0.10)'
-              }}
-              onMouseLeave={e => {
-                e.currentTarget.style.background  = 'var(--surface2)'
-                e.currentTarget.style.borderColor = 'var(--border)'
-                e.currentTarget.style.transform   = ''
-                e.currentTarget.style.boxShadow   = ''
+              key={cat.title}
+              {...fadeUp(ci * 0.06)}
+              style={{
+                background: cat.bg,
+                border: '1px solid #000',
+                borderRadius: 12,
+                overflow: 'hidden',
+                boxShadow: 'rgb(10,10,13) 2px 2px 0px 0px',
               }}
             >
-              <div className="flex justify-between items-center mb-3">
-                <p className="text-sm font-semibold" style={{ color:'var(--text-1)' }}>{skill.name}</p>
-                <span className="text-xs font-bold" style={{ color:skill.color==='gold'?'var(--gold)':'var(--sky)' }}>
-                  {skill.level}%
-                </span>
+              <div style={{
+                padding: '10px 16px',
+                borderBottom: '1px solid #000',
+                fontWeight: 700,
+                fontSize: 13,
+                color: '#000',
+                letterSpacing: '0.04em',
+                textTransform: 'uppercase',
+              }}>
+                {cat.title}
               </div>
-              <div className="h-1.5 rounded-full overflow-hidden" style={{ background:'rgba(255,255,255,0.06)' }}>
-                <motion.div
-                  className="h-full rounded-full"
-                  style={{ background: skill.color==='gold'
-                    ? 'linear-gradient(90deg,var(--gold-dark),var(--gold-light))'
-                    : 'linear-gradient(90deg,var(--sky-deep),var(--sky))' }}
-                  initial={{ width:0 }}
-                  animate={isInView ? { width:`${skill.level}%` } : {}}
-                  transition={{ duration:1.4, delay:0.3+i*0.1, ease:'easeOut' }}
-                />
+              <div style={{ padding: '12px 16px', display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+                {cat.items.map(item => (
+                  <span
+                    key={item}
+                    style={{
+                      background: '#fff',
+                      border: '1px solid #000',
+                      borderRadius: 100,
+                      padding: '4px 12px',
+                      fontSize: 13,
+                      fontWeight: 500,
+                      color: '#000',
+                      boxShadow: 'rgb(10,10,13) 1px 1px 0px 0px',
+                    }}
+                  >
+                    {item}
+                  </span>
+                ))}
               </div>
             </motion.div>
           ))}
         </div>
 
-        {/* ── Infinite Marquee ─────────────────── */}
-        <motion.div
-          initial={{ opacity:0 }}
-          animate={isInView ? { opacity:1 } : {}}
-          transition={{ delay:0.5 }}
-          className="mb-20 overflow-hidden relative"
-          style={{ maskImage:'linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)' }}
+        {/* Marquee band */}
+        <div
+          className="marquee-wrap"
+          style={{
+            background: '#000',
+            border: '1px solid #000',
+            borderRadius: 12,
+            padding: '14px 0',
+          }}
         >
-          <p className="text-xs font-bold uppercase tracking-widest mb-5" style={{ color:'var(--text-3)' }}>
-            Tech Stack
-          </p>
-          <div className="flex overflow-hidden">
-            <div className="marquee-track">
-              {TECH.map((t, i) => (
-                <span
-                  key={i}
-                  className="inline-flex items-center mx-3 px-5 py-2 rounded-full text-xs font-semibold whitespace-nowrap transition-all duration-200 cursor-default"
-                  style={{
-                    background:'var(--surface2)',
-                    border:'1px solid var(--border)',
-                    color:'var(--text-2)',
-                  }}
-                  onMouseEnter={e => {
-                    e.currentTarget.style.color = i%2===0?'var(--gold)':'var(--sky)'
-                    e.currentTarget.style.borderColor = i%2===0?'rgba(212,162,78,0.4)':'rgba(126,184,247,0.35)'
-                    e.currentTarget.style.background = i%2===0?'rgba(212,162,78,0.08)':'rgba(126,184,247,0.07)'
-                  }}
-                  onMouseLeave={e => {
-                    e.currentTarget.style.color = 'var(--text-2)'
-                    e.currentTarget.style.borderColor = 'var(--border)'
-                    e.currentTarget.style.background = 'var(--surface2)'
-                  }}
-                >
-                  {t}
-                </span>
-              ))}
-            </div>
+          <div className="marquee-track">
+            {MARQUEE_ITEMS.map((t, i) => (
+              <span
+                key={i}
+                style={{
+                  color: i % 3 === 0 ? '#a3e635' : i % 3 === 1 ? '#b7eaf6' : '#fff',
+                  fontWeight: 500,
+                  fontSize: 14,
+                  paddingRight: 40,
+                  whiteSpace: 'nowrap',
+                  letterSpacing: '-0.096px',
+                }}
+              >
+                ✦ {t}
+              </span>
+            ))}
           </div>
-        </motion.div>
-
-        {/* Category tag clouds */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-12">
-          {skillCategories.map((cat, ci) => (
-            <motion.div
-              key={cat.title}
-              initial={{ opacity:0, y:20 }}
-              animate={isInView ? { opacity:1, y:0 } : {}}
-              transition={{ duration:0.6, delay:0.2+ci*0.07 }}
-            >
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-1 h-5 rounded-full" style={{ background:cat.accent==='gold'?'var(--gold)':'var(--sky)' }} />
-                <h3 className="text-sm font-bold uppercase tracking-wider" style={{ color:'var(--text-1)' }}>{cat.title}</h3>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {cat.items.map(item => (
-                  <motion.span
-                    key={item}
-                    className="px-3 py-1.5 text-xs font-semibold rounded-lg cursor-default"
-                    style={{ background:'var(--surface2)', border:'1px solid var(--border)', color:'var(--text-2)' }}
-                    whileHover={{
-                      background: cat.accent==='gold'?'rgba(212,162,78,0.1)':'rgba(126,184,247,0.08)',
-                      borderColor:cat.accent==='gold'?'rgba(212,162,78,0.4)':'rgba(126,184,247,0.35)',
-                      color:      cat.accent==='gold'?'var(--gold)':'var(--sky)',
-                      y:-2,
-                    }}
-                    transition={{ duration:0.18 }}
-                  >
-                    {item}
-                  </motion.span>
-                ))}
-              </div>
-            </motion.div>
-          ))}
         </div>
       </div>
     </section>

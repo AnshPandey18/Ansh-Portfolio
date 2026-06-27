@@ -1,209 +1,181 @@
 import { useState } from 'react'
 import { motion, useScroll, useMotionValueEvent } from 'framer-motion'
 
-const SunIcon = () => (
-  <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-    <circle cx="12" cy="12" r="5" />
-    <path strokeLinecap="round" d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
-  </svg>
-)
+const NAV_ITEMS = [
+  { label: 'About',      href: '#about'      },
+  { label: 'Skills',     href: '#skills'     },
+  { label: 'Projects',   href: '#projects'   },
+  { label: 'Experience', href: '#experience' },
+  { label: 'Contact',    href: '#contact'    },
+]
 
-const MoonIcon = () => (
-  <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
-  </svg>
-)
+const scrollTo = href => document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' })
 
-const Navigation = ({ darkMode, setDarkMode }) => {
-  const [isVisible, setIsVisible] = useState(true)
-  const [lastScrollY, setLastScrollY] = useState(0)
-  const [scrolled, setScrolled] = useState(false)
-  const [mobileOpen, setMobileOpen] = useState(false)
+export default function Navigation() {
+  const [open, setOpen] = useState(false)
+  const [visible, setVisible] = useState(true)
+  const [lastY, setLastY] = useState(0)
   const { scrollY } = useScroll()
 
-  useMotionValueEvent(scrollY, 'change', (latest) => {
-    setScrolled(latest > 40)
-    if (latest > lastScrollY && latest > 100) {
-      setIsVisible(false)
-      setMobileOpen(false)
-    } else {
-      setIsVisible(true)
-    }
-    setLastScrollY(latest)
+  useMotionValueEvent(scrollY, 'change', y => {
+    setVisible(y < lastY || y < 60)
+    setLastY(y)
   })
 
-  const navItems = [
-    { label: 'About', href: '#about' },
-    { label: 'Skills', href: '#skills' },
-    { label: 'Projects', href: '#projects' },
-    { label: 'Experience', href: '#experience' },
-    { label: 'Contact', href: '#contact' },
-  ]
-
-  const scrollToSection = (href) => {
-    document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' })
-    setMobileOpen(false)
-  }
-
   return (
-    <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: isVisible ? 0 : -100 }}
+    <motion.header
+      animate={{ y: visible ? 0 : -100 }}
       transition={{ duration: 0.3, ease: 'easeOut' }}
-      className="fixed top-0 left-0 right-0 z-50"
-      style={{
-        background: scrolled ? 'var(--glass-bg)' : 'transparent',
-        borderBottom: scrolled ? '1px solid var(--border)' : '1px solid transparent',
-        backdropFilter: scrolled ? 'blur(20px) saturate(150%)' : 'none',
-        WebkitBackdropFilter: scrolled ? 'blur(20px) saturate(150%)' : 'none',
-        transition: 'background 0.4s ease, border-color 0.3s ease, backdrop-filter 0.3s ease',
-      }}
+      className="sticky top-0 z-50 w-full flex justify-center"
+      style={{ background: 'transparent', padding: '12px 24px' }}
     >
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
-        <div className="flex items-center justify-between h-16 md:h-20">
+      {/* Pill nav bar */}
+      <nav
+        style={{
+          background: '#fff',
+          border: '1px solid #000',
+          borderRadius: 100,
+          boxShadow: 'rgb(10,10,13) 2px 2px 0px 0px',
+          padding: '8px 16px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          width: '100%',
+          maxWidth: 960,
+          gap: 16,
+        }}
+      >
+        {/* Logo */}
+        <a
+          href="#hero"
+          onClick={e => { e.preventDefault(); scrollTo('#hero') }}
+          style={{ display: 'flex', alignItems: 'center', gap: 8, textDecoration: 'none', flexShrink: 0 }}
+        >
+          {/* Fish icon */}
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <path d="M2 12C2 12 6 5 13 5C18 5 21 9 21 12C21 15 18 19 13 19C6 19 2 12 2 12Z" fill="#a3e635" stroke="#000" strokeWidth="1.5"/>
+            <circle cx="16" cy="10" r="1.5" fill="#000"/>
+            <path d="M21 8L24 5M21 16L24 19" stroke="#000" strokeWidth="1.5" strokeLinecap="round"/>
+          </svg>
+          <span style={{ fontWeight: 700, fontSize: 18, color: '#000', letterSpacing: '-0.5px' }}>
+            Ansh Pandey
+          </span>
+        </a>
 
-          {/* Logo */}
-          <motion.a
-            href="#hero"
-            onClick={(e) => { e.preventDefault(); scrollToSection('#hero') }}
-            className="text-xl font-display font-black tracking-tight select-none"
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.97 }}
-          >
-            <span style={{ color: 'var(--gold)' }}>A</span>
-            <span style={{ color: 'var(--text-1)' }}>nsh</span>
-            <span style={{ color: 'var(--text-2)', fontWeight: 400, marginLeft: 4 }}>Pandey</span>
-          </motion.a>
-
-          {/* Desktop Nav */}
-          <div className="hidden md:flex items-center gap-1">
-            {navItems.map((item, i) => (
-              <motion.a
-                key={item.label}
-                href={item.href}
-                onClick={(e) => { e.preventDefault(); scrollToSection(item.href) }}
-                className="relative px-4 py-2 text-sm font-medium rounded-lg"
-                style={{ color: 'var(--text-2)' }}
-                initial={{ opacity: 0, y: -14 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.07 }}
-                whileHover={{ color: 'var(--gold)' }}
-              >
-                {item.label}
-                <motion.span
-                  className="absolute bottom-1 left-4 right-4 h-px"
-                  style={{ background: 'var(--gold)', transformOrigin: 'left', scaleX: 0 }}
-                  whileHover={{ scaleX: 1 }}
-                  transition={{ duration: 0.22 }}
-                />
-              </motion.a>
-            ))}
-
-            {/* Theme Toggle */}
-            <motion.button
-              onClick={() => setDarkMode(!darkMode)}
-              className="ml-3 p-2.5 rounded-xl transition-all"
+        {/* Desktop links */}
+        <div className="hidden md:flex items-center" style={{ gap: 4 }}>
+          {NAV_ITEMS.map(item => (
+            <a
+              key={item.label}
+              href={item.href}
+              onClick={e => { e.preventDefault(); scrollTo(item.href) }}
               style={{
-                background: 'var(--surface2)',
-                border: '1px solid var(--border)',
-                color: darkMode ? 'var(--gold)' : 'var(--sky)',
+                fontWeight: 500,
+                fontSize: 15,
+                color: '#222',
+                textDecoration: 'none',
+                padding: '6px 14px',
+                borderRadius: 100,
+                transition: 'background 0.15s',
               }}
-              whileHover={{
-                scale: 1.08,
-                borderColor: darkMode ? 'rgba(212,168,67,0.5)' : 'rgba(29,95,168,0.4)',
-              }}
-              whileTap={{ scale: 0.93 }}
-              aria-label="Toggle theme"
-              title={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
+              onMouseEnter={e => { e.currentTarget.style.background = '#f5f5f5' }}
+              onMouseLeave={e => { e.currentTarget.style.background = 'transparent' }}
             >
-              <motion.div
-                key={darkMode ? 'moon' : 'sun'}
-                initial={{ rotate: -90, opacity: 0, scale: 0.6 }}
-                animate={{ rotate: 0, opacity: 1, scale: 1 }}
-                exit={{ rotate: 90, opacity: 0, scale: 0.6 }}
-                transition={{ duration: 0.25 }}
-              >
-                {darkMode ? <SunIcon /> : <MoonIcon />}
-              </motion.div>
-            </motion.button>
-
-            {/* CTA */}
-            <motion.button
-              onClick={() => scrollToSection('#contact')}
-              className="ml-2 px-5 py-2 text-sm font-bold rounded-xl"
-              style={{ background: 'var(--gold)', color: '#0a0d14' }}
-              whileHover={{ scale: 1.05, boxShadow: '0 0 20px var(--gold-glow)' }}
-              whileTap={{ scale: 0.97 }}
-            >
-              Hire Me
-            </motion.button>
-          </div>
-
-          {/* Mobile: theme + menu */}
-          <div className="md:hidden flex items-center gap-2">
-            <button
-              onClick={() => setDarkMode(!darkMode)}
-              className="p-2.5 rounded-xl transition-all"
-              style={{
-                background: 'var(--surface2)',
-                border: '1px solid var(--border)',
-                color: darkMode ? 'var(--gold)' : 'var(--sky)',
-              }}
-              aria-label="Toggle theme"
-            >
-              {darkMode ? <SunIcon /> : <MoonIcon />}
-            </button>
-            <button
-              onClick={() => setMobileOpen(!mobileOpen)}
-              className="p-2.5 rounded-xl"
-              style={{ color: 'var(--gold)', background: 'var(--surface2)', border: '1px solid var(--border)' }}
-              aria-label="Menu"
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                {mobileOpen
-                  ? <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  : <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                }
-              </svg>
-            </button>
-          </div>
+              {item.label}
+            </a>
+          ))}
         </div>
 
-        {/* Mobile drawer */}
-        {mobileOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden pb-4 border-t"
-            style={{ borderColor: 'var(--border)' }}
+        {/* CTA cluster */}
+        <div className="hidden md:flex items-center" style={{ gap: 8, flexShrink: 0 }}>
+          <a
+            href="mailto:anshpandey1807@gmail.com"
+            className="btn-ghost"
+            style={{ fontSize: 14, padding: '8px 18px' }}
           >
-            {navItems.map((item) => (
-              <button
-                key={item.label}
-                onClick={() => scrollToSection(item.href)}
-                className="w-full text-left px-4 py-3 text-sm font-medium transition-colors"
-                style={{ color: 'var(--text-2)' }}
-                onMouseEnter={e => { e.currentTarget.style.color = 'var(--gold)' }}
-                onMouseLeave={e => { e.currentTarget.style.color = 'var(--text-2)' }}
-              >
-                {item.label}
-              </button>
-            ))}
-            <div className="px-4 pt-2">
-              <button
-                onClick={() => scrollToSection('#contact')}
-                className="w-full py-2.5 text-sm font-bold rounded-xl"
-                style={{ background: 'var(--gold)', color: '#0a0d14' }}
-              >
-                Hire Me
-              </button>
-            </div>
-          </motion.div>
-        )}
-      </div>
-    </motion.nav>
+            Sign In
+          </a>
+          <a
+            href="#contact"
+            onClick={e => { e.preventDefault(); scrollTo('#contact') }}
+            className="btn-lime"
+            style={{ fontSize: 14, padding: '8px 18px' }}
+          >
+            Book a Call
+          </a>
+        </div>
+
+        {/* Mobile toggle */}
+        <button
+          className="md:hidden"
+          onClick={() => setOpen(!open)}
+          style={{
+            background: 'transparent',
+            border: '1px solid #000',
+            borderRadius: 100,
+            width: 36,
+            height: 36,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            cursor: 'pointer',
+          }}
+          aria-label="Toggle menu"
+        >
+          <svg width="16" height="16" fill="none" stroke="#000" strokeWidth="2" viewBox="0 0 24 24">
+            {open
+              ? <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              : <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+            }
+          </svg>
+        </button>
+      </nav>
+
+      {/* Mobile drawer */}
+      {open && (
+        <motion.div
+          initial={{ opacity: 0, y: -8 }}
+          animate={{ opacity: 1, y: 0 }}
+          style={{
+            position: 'absolute',
+            top: 72,
+            left: 24,
+            right: 24,
+            background: '#fff',
+            border: '1px solid #000',
+            borderRadius: 16,
+            boxShadow: 'rgb(10,10,13) 4px 4px 0px 0px',
+            padding: 16,
+            zIndex: 100,
+          }}
+        >
+          {NAV_ITEMS.map(item => (
+            <a
+              key={item.label}
+              href={item.href}
+              onClick={e => { e.preventDefault(); scrollTo(item.href); setOpen(false) }}
+              style={{
+                display: 'block',
+                fontWeight: 500,
+                fontSize: 16,
+                color: '#000',
+                textDecoration: 'none',
+                padding: '10px 12px',
+                borderRadius: 8,
+              }}
+              onMouseEnter={e => { e.currentTarget.style.background = '#f5f5f5' }}
+              onMouseLeave={e => { e.currentTarget.style.background = 'transparent' }}
+            >
+              {item.label}
+            </a>
+          ))}
+          <div style={{ marginTop: 12, paddingTop: 12, borderTop: '1px solid #e5e5e5', display: 'flex', gap: 8 }}>
+            <a href="#contact" onClick={e => { e.preventDefault(); scrollTo('#contact'); setOpen(false) }} className="btn-lime" style={{ flex: 1, justifyContent: 'center', fontSize: 14, padding: '8px 16px' }}>
+              Book a Call
+            </a>
+          </div>
+        </motion.div>
+      )}
+    </motion.header>
   )
 }
-
-export default Navigation

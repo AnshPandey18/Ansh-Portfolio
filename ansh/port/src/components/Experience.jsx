@@ -1,174 +1,135 @@
-import { motion, useInView } from 'framer-motion'
-import { useRef, useState } from 'react'
+import { motion } from 'framer-motion'
+import { useState } from 'react'
 
-const Experience = () => {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: '-80px' })
-  const [activeTab, setActiveTab] = useState('experience')
+const fadeUp = (delay = 0) => ({
+  initial: { opacity: 0, y: 20 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: '-60px' },
+  transition: { duration: 0.55, delay, ease: [0.22, 1, 0.36, 1] },
+})
 
-  const timeline = [
-    {
-      type: 'experience',
-      title: 'Full Stack Developer',
-      company: 'Elegant AV Solution (Noida)',
-      period: 'Jul 2025 – Present',
-      description: 'Developing full-stack web applications for portable cabin and AV solution services. Designed database schemas and backend REST APIs to manage product listings and client inquiries. Digitized offline business workflows into scalable web-based systems.',
-    },
+const WORK = [
+  {
+    title: 'Full Stack Developer',
+    company: 'Elegant AV Solution',
+    location: 'Noida',
+    period: 'Jul 2025 – Present',
+    desc: 'Building full-stack web apps for AV solutions and portable cabin services. Designed DB schemas and REST APIs. Digitized offline business workflows.',
+    bg: '#b9f0c0',
+  },
+  {
+    title: 'Full Stack Developer',
+    company: 'Research Locker',
+    location: 'Remote',
+    period: 'Jan – Jun 2025',
+    desc: 'Research-based web apps for academic users. Secure auth, RESTful APIs with Node/Express, responsive React frontends, optimized MySQL queries.',
+    bg: '#b7eaf6',
+  },
+]
 
-    {
-      type: 'experience',
-      title: 'Full Stack Developer',
-      company: 'Research Locker (Remote)',
-      period: 'Jan 2025 – Jun 2025',
-      description: 'Developed and maintained research-based web applications for academic users. Built secure authentication systems and RESTful APIs using Node.js and Express.js. Designed responsive frontend interfaces with React.js. Optimized database queries in MySQL.',
-    },
-    {
-      type: 'education',
-      title: 'B.Tech — Computer Science & IT',
-      company: 'Dronacharya College of Engineering, Greater Noida (AKTU)',
-      period: '2022 – Present',
-      description: 'Pursuing BTech in CSIT. Hands-on coursework in DBMS, OOPS, Operating Systems, and Computer Networks.',
-    },
-    {
-      type: 'education',
-      title: 'Senior Secondary (Class XII)',
-      company: 'CBSE Board',
-      period: '2022',
-      description: 'Completed Class XII with focus on Science and Mathematics.',
-    },
-    {
-      type: 'education',
-      title: 'Secondary (Class X)',
-      company: 'CBSE Board',
-      period: '2020',
-      description: 'Completed Class X secondary education.',
-    },
-  ]
+const EDU = [
+  { title: 'B.Tech — CSIT', company: 'Dronacharya College of Engineering (AKTU)', period: '2022 – Present', desc: 'Pursuing BTech CSIT with coursework in DBMS, OOPS, OS, and Computer Networks.', bg: '#fef3c8' },
+  { title: 'Senior Secondary (XII)', company: 'CBSE Board', period: '2022', desc: 'Completed with a focus on Science and Mathematics.', bg: '#d2fae5' },
+  { title: 'Secondary (X)', company: 'CBSE Board', period: '2020', desc: 'Completed secondary education.', bg: '#fae9ff' },
+]
 
-  const filtered = timeline.filter(t => t.type === activeTab)
+function TimelineCard({ item, i, isWork }) {
+  return (
+    <motion.div
+      {...fadeUp(i * 0.1)}
+      style={{ position: 'relative', paddingLeft: 40, paddingBottom: 28 }}
+    >
+      {/* Dot */}
+      <div style={{
+        position: 'absolute', left: 4, top: 20,
+        width: 14, height: 14, borderRadius: '50%',
+        background: isWork ? '#a3e635' : '#b7eaf6',
+        border: '2px solid #000',
+        zIndex: 2,
+      }} />
+      {/* Line continues below (except last) */}
+      <div style={{
+        position: 'absolute', left: 10, top: 34, bottom: 0, width: 2,
+        background: '#e5e5e5',
+      }} />
+
+      <div style={{
+        background: item.bg,
+        border: '1px solid #000',
+        borderRadius: 16,
+        padding: '20px 24px',
+        boxShadow: 'rgb(10,10,13) 2px 2px 0px 0px',
+      }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 12, marginBottom: 6 }}>
+          <h3 style={{ fontWeight: 700, fontSize: 18, letterSpacing: '-0.108px', color: '#000' }}>{item.title}</h3>
+          <span style={{
+            background: '#fff', border: '1px solid #000', borderRadius: 100,
+            padding: '3px 10px', fontSize: 12, fontWeight: 500, color: '#000',
+            whiteSpace: 'nowrap', flexShrink: 0,
+            boxShadow: 'rgb(10,10,13) 1px 1px 0px 0px',
+          }}>
+            {item.period}
+          </span>
+        </div>
+        <p style={{ fontWeight: 700, fontSize: 14, color: '#000', marginBottom: 8 }}>
+          {item.company}{item.location ? ` · ${item.location}` : ''}
+        </p>
+        <p style={{ fontWeight: 500, fontSize: 14, color: '#333', lineHeight: 1.6 }}>{item.desc}</p>
+      </div>
+    </motion.div>
+  )
+}
+
+export default function Experience() {
+  const [tab, setTab] = useState('work')
 
   return (
-    <section id="experience" className="py-32 md:py-40 relative overflow-hidden" style={{ background: 'var(--surface)' }}>
-      <div className="bg-dots absolute inset-0 pointer-events-none opacity-25" aria-hidden />
-      <div
-        className="absolute top-0 left-0 right-0 h-px pointer-events-none"
-        style={{ background: 'linear-gradient(90deg, transparent, rgba(212,162,78,0.22), transparent)' }}
-      />
-      <div
-        className="absolute right-0 bottom-1/4 w-80 h-80 pointer-events-none"
-        style={{ background: 'radial-gradient(circle, rgba(212,168,67,0.04) 0%, transparent 70%)', filter: 'blur(50px)' }}
-      />
+    <section id="experience" style={{ background: '#f5f5f5', padding: '80px 0' }}>
+      <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 24px' }}>
 
-      <div ref={ref} className="max-w-5xl mx-auto px-6 sm:px-8 lg:px-12">
-        {/* Heading */}
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7 }}
-          className="mb-12"
-        >
-          <span className="pill mb-4 inline-flex">Timeline</span>
-          <h2
-            className="font-display font-black"
-            style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', color: 'var(--text-1)' }}
-          >
-            Experience &amp; <span className="gradient-text">Education</span>
-          </h2>
+        {/* Eyebrow */}
+        <motion.div {...fadeUp(0)} className="section-eyebrow">
+          <span className="chip">Timeline</span>
         </motion.div>
 
+        <motion.h2 {...fadeUp(0.05)} style={{
+          fontWeight: 700, fontSize: 'clamp(32px,5vw,48px)', letterSpacing: '-0.96px',
+          lineHeight: 1.16, color: '#000', textAlign: 'center', maxWidth: 560, margin: '0 auto 48px',
+        }}>
+          Experience & Education
+        </motion.h2>
+
         {/* Tabs */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ delay: 0.2 }}
-          className="flex gap-2 mb-10"
-        >
-          {['experience', 'education'].map(tab => (
+        <motion.div {...fadeUp(0.1)} style={{ display: 'flex', justifyContent: 'center', gap: 8, marginBottom: 48 }}>
+          {['work', 'education'].map(t => (
             <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className="px-5 py-2 text-sm font-semibold rounded-xl capitalize transition-all"
+              key={t}
+              onClick={() => setTab(t)}
               style={{
-                background: activeTab === tab ? 'var(--gold)' : 'var(--surface2)',
-                color: activeTab === tab ? '#0a0d14' : 'var(--text-2)',
-                border: '1px solid',
-                borderColor: activeTab === tab ? 'var(--gold)' : 'var(--border)',
+                padding: '8px 20px',
+                borderRadius: 100,
+                border: '1px solid #000',
+                background: tab === t ? '#a3e635' : '#fff',
+                color: '#000',
+                fontWeight: tab === t ? 700 : 500,
+                fontSize: 15,
+                cursor: 'pointer',
+                boxShadow: tab === t ? 'rgb(10,10,13) 2px 2px 0px 0px' : 'none',
+                transition: 'all 0.15s ease',
               }}
             >
-              {tab}
+              {t === 'work' ? 'Work' : 'Education'}
             </button>
           ))}
         </motion.div>
 
         {/* Timeline */}
-        <div className="relative">
-          {/* Vertical line */}
-          <motion.div
-            className="absolute left-5 top-0 bottom-0 w-px hidden md:block"
-            style={{ background: 'linear-gradient(to bottom, var(--gold), var(--sky-dark), transparent)', opacity: 0.25 }}
-            initial={{ scaleY: 0 }}
-            animate={isInView ? { scaleY: 1 } : {}}
-            transition={{ duration: 1.2, ease: 'easeOut', delay: 0.3 }}
-          />
-
-          <div className="space-y-8">
-            {filtered.map((item, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, x: -24 }}
-                animate={isInView ? { opacity: 1, x: 0 } : {}}
-                transition={{ duration: 0.6, delay: 0.15 + index * 0.1 }}
-                className="relative md:pl-16"
-              >
-                {/* Dot */}
-                <div
-                  className="absolute left-3.5 top-6 w-3 h-3 rounded-full hidden md:block"
-                  style={{
-                    background: activeTab === 'experience' ? 'var(--gold)' : 'var(--sky)',
-                    boxShadow: activeTab === 'experience'
-                      ? '0 0 8px rgba(212,168,67,0.5)'
-                      : '0 0 8px rgba(147,197,253,0.5)',
-                  }}
-                />
-
-                <div
-                  className="p-6 md:p-8 rounded-xl group transition-all duration-300"
-                  style={{
-                    background: 'var(--surface2)',
-                    border: '1px solid var(--border)',
-                  }}
-                  onMouseEnter={e => {
-                    e.currentTarget.style.borderColor = activeTab === 'experience'
-                      ? 'rgba(212,168,67,0.25)' : 'rgba(147,197,253,0.2)'
-                  }}
-                  onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)' }}
-                >
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-3">
-                    <h3 className="text-lg font-bold" style={{ color: 'var(--text-1)' }}>{item.title}</h3>
-                    <span
-                      className="text-xs font-semibold px-3 py-1 rounded-full whitespace-nowrap"
-                      style={{
-                        background: activeTab === 'experience' ? 'rgba(212,168,67,0.1)' : 'rgba(147,197,253,0.08)',
-                        color: activeTab === 'experience' ? 'var(--gold)' : 'var(--sky)',
-                        border: `1px solid ${activeTab === 'experience' ? 'rgba(212,168,67,0.2)' : 'rgba(147,197,253,0.15)'}`,
-                      }}
-                    >
-                      {item.period}
-                    </span>
-                  </div>
-                  <p className="text-sm font-semibold mb-3"
-                    style={{ color: activeTab === 'experience' ? 'var(--gold)' : 'var(--sky)' }}>
-                    {item.company}
-                  </p>
-                  <p className="text-sm leading-relaxed" style={{ color: 'var(--text-2)' }}>{item.description}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+        <div style={{ maxWidth: 680, margin: '0 auto', position: 'relative' }}>
+          {(tab === 'work' ? WORK : EDU).map((item, i) => (
+            <TimelineCard key={item.title} item={item} i={i} isWork={tab === 'work'} />
+          ))}
         </div>
       </div>
     </section>
   )
 }
-
-export default Experience
