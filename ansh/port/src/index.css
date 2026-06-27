@@ -199,6 +199,27 @@ body {
   background: var(--black);
 }
 
+/* ── Logo hover spin ──────────────────────── */
+.ap-logo-spin:hover {
+  animation: logo-spin 0.6s ease-in-out;
+}
+@keyframes logo-spin {
+  0%   { transform: rotate(0deg) scale(1); }
+  40%  { transform: rotate(12deg) scale(1.08); }
+  100% { transform: rotate(0deg) scale(1); }
+}
+
+/* ── Hero background gradient shift ─────────── */
+@keyframes hero-gradient {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.hero-bg-animate {
+  background-size: 200% 200%;
+  animation: hero-gradient 12s ease infinite;
+}
+
 /* ── Keyframes ────────────────────────────── */
 @keyframes marquee {
   from { transform: translateX(0); }
@@ -211,6 +232,28 @@ body {
 @keyframes float-fish {
   0%,100% { transform: translateY(0) rotate(0deg); }
   50%      { transform: translateY(-8px) rotate(3deg); }
+}
+@keyframes blob-morph-1 {
+  0%,100% { border-radius: 60% 40% 70% 30% / 50% 60% 40% 50%; transform: translate(0,0) scale(1); }
+  33%      { border-radius: 40% 60% 30% 70% / 60% 30% 70% 40%; transform: translate(30px,-20px) scale(1.05); }
+  66%      { border-radius: 70% 30% 60% 40% / 40% 70% 30% 60%; transform: translate(-15px,25px) scale(0.97); }
+}
+@keyframes blob-morph-2 {
+  0%,100% { border-radius: 40% 60% 30% 70% / 60% 40% 60% 40%; transform: translate(0,0) scale(1); }
+  40%      { border-radius: 70% 30% 60% 40% / 30% 70% 40% 60%; transform: translate(-25px,20px) scale(1.08); }
+  70%      { border-radius: 30% 70% 50% 50% / 50% 30% 70% 50%; transform: translate(20px,-15px) scale(0.95); }
+}
+@keyframes blob-morph-3 {
+  0%,100% { border-radius: 70% 30% 50% 50% / 40% 60% 40% 60%; transform: translate(0,0); }
+  50%      { border-radius: 30% 70% 40% 60% / 60% 40% 60% 40%; transform: translate(18px,-22px) scale(1.1); }
+}
+@keyframes blob-drift {
+  0%,100% { transform: translate(0,0) scale(1); }
+  50%      { transform: translate(-20px, 15px) scale(1.12); }
+}
+@keyframes grid-drift {
+  from { background-position: 0 0; }
+  to   { background-position: 28px 28px; }
 }
 .float-cloud { animation: float-cloud 8s ease-in-out infinite; }
 .float-fish  { animation: float-fish 6s ease-in-out infinite; }

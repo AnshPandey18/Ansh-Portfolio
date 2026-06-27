@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion'
 import Navigation  from './components/Navigation'
 import Hero        from './components/Hero'
 import About       from './components/About'
@@ -11,17 +12,28 @@ import Footer      from './components/Footer'
 function FloatingCTA() {
   return (
     <div className="floating-cta">
-      <a
+      <motion.a
         href="#contact"
         onClick={e => { e.preventDefault(); document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' }) }}
-        className="btn-lime text-sm font-medium"
-        style={{ fontSize: 14 }}
+        className="btn-lime"
+        style={{ fontSize: 14, padding: '10px 20px', gap: 10 }}
+        initial={{ opacity: 0, scale: 0.8, y: 20 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        transition={{ delay: 1.5, duration: 0.5, type: 'spring', stiffness: 280, damping: 20 }}
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.96 }}
       >
-        <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M8 12h8M8 8h5M8 16h3M4 6h16v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6z"/>
+        {/* Mini AP logo */}
+        <svg width="20" height="20" viewBox="0 0 100 100" fill="none">
+          <path d="M18 25 Q8 50 20 75"  stroke="#15803d" strokeWidth="4"  strokeLinecap="round" fill="none"/>
+          <path d="M82 25 Q92 50 80 78" stroke="#15803d" strokeWidth="4"  strokeLinecap="round" fill="none"/>
+          <path d="M15 80 L38 20 L55 60" stroke="#15803d" strokeWidth="9" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+          <path d="M25 58 L48 58"        stroke="#15803d" strokeWidth="7"  strokeLinecap="round" fill="none"/>
+          <path d="M50 80 L50 22"        stroke="#15803d" strokeWidth="9"  strokeLinecap="round" fill="none"/>
+          <path d="M50 22 Q80 22 80 43 Q80 62 50 60" stroke="#15803d" strokeWidth="9" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
         </svg>
         Let's Talk
-      </a>
+      </motion.a>
     </div>
   )
 }

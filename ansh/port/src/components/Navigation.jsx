@@ -45,19 +45,30 @@ export default function Navigation() {
           gap: 16,
         }}
       >
-        {/* Logo */}
+        {/* AP Monogram Logo */}
         <a
           href="#hero"
           onClick={e => { e.preventDefault(); scrollTo('#hero') }}
-          style={{ display: 'flex', alignItems: 'center', gap: 8, textDecoration: 'none', flexShrink: 0 }}
+          style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none', flexShrink: 0 }}
         >
-          {/* Fish icon */}
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-            <path d="M2 12C2 12 6 5 13 5C18 5 21 9 21 12C21 15 18 19 13 19C6 19 2 12 2 12Z" fill="#a3e635" stroke="#000" strokeWidth="1.5"/>
-            <circle cx="16" cy="10" r="1.5" fill="#000"/>
-            <path d="M21 8L24 5M21 16L24 19" stroke="#000" strokeWidth="1.5" strokeLinecap="round"/>
-          </svg>
-          <span style={{ fontWeight: 700, fontSize: 18, color: '#000', letterSpacing: '-0.5px' }}>
+          <motion.div
+            className="ap-logo-spin"
+            whileHover={{ rotate: [0, 10, -6, 0], scale: [1, 1.1, 1.05, 1] }}
+            transition={{ duration: 0.5 }}
+          >
+            <svg width="36" height="36" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              {/* Outer swoosh curves */}
+              <path d="M18 25 Q8 50 20 75" stroke="#a3e635" strokeWidth="3" strokeLinecap="round" fill="none"/>
+              <path d="M82 25 Q92 50 80 78" stroke="#a3e635" strokeWidth="3" strokeLinecap="round" fill="none"/>
+              {/* A letterform */}
+              <path d="M15 80 L38 20 L55 60" stroke="#a3e635" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+              <path d="M25 58 L48 58" stroke="#a3e635" strokeWidth="5" strokeLinecap="round" fill="none"/>
+              {/* P letterform */}
+              <path d="M50 80 L50 22" stroke="#a3e635" strokeWidth="7" strokeLinecap="round" fill="none"/>
+              <path d="M50 22 Q80 22 80 43 Q80 62 50 60" stroke="#a3e635" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+            </svg>
+          </motion.div>
+          <span style={{ fontWeight: 700, fontSize: 17, color: '#000', letterSpacing: '-0.4px' }}>
             Ansh Pandey
           </span>
         </a>

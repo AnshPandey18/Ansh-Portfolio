@@ -17,11 +17,15 @@ export default function Footer() {
 
           {/* Brand */}
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <path d="M2 12C2 12 6 5 13 5C18 5 21 9 21 12C21 15 18 19 13 19C6 19 2 12 2 12Z" fill="#a3e635" stroke="#000" strokeWidth="1.5"/>
-                <circle cx="16" cy="10" r="1.5" fill="#000"/>
-                <path d="M21 8L24 5M21 16L24 19" stroke="#000" strokeWidth="1.5" strokeLinecap="round"/>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
+              {/* AP monogram logo */}
+              <svg width="34" height="34" viewBox="0 0 100 100" fill="none">
+                <path d="M18 25 Q8 50 20 75"  stroke="#a3e635" strokeWidth="3"  strokeLinecap="round" fill="none"/>
+                <path d="M82 25 Q92 50 80 78" stroke="#a3e635" strokeWidth="3"  strokeLinecap="round" fill="none"/>
+                <path d="M15 80 L38 20 L55 60" stroke="#a3e635" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+                <path d="M25 58 L48 58"        stroke="#a3e635" strokeWidth="5"  strokeLinecap="round" fill="none"/>
+                <path d="M50 80 L50 22"        stroke="#a3e635" strokeWidth="7"  strokeLinecap="round" fill="none"/>
+                <path d="M50 22 Q80 22 80 43 Q80 62 50 60" stroke="#a3e635" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
               </svg>
               <span style={{ fontWeight: 700, fontSize: 18, color: '#000', letterSpacing: '-0.5px' }}>Ansh Pandey</span>
             </div>
