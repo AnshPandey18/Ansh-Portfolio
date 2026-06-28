@@ -23,6 +23,18 @@ const Projects = () => {
   const [selected, setSelected] = useState(null)
 
   const projects = [
+    { id:7, title:'Research Locker',      category:'Development',  year:'2025',
+      tech:['React','Tailwind CSS','AI Summaries','PayPal API'],
+      description:'Save articles, organize PDFs, generate AI summaries, and manage research effortlessly — all in one clean workspace. A full-featured research productivity tool with smart tagging and payment integration.',
+      role:'Full Stack Developer',
+      link:'https://researchlocker.co/',
+      featured:true },
+    { id:8, title:'SubEx Club',           category:'Development',  year:'2025',
+      tech:['React','Tailwind CSS','Privacy-First Design'],
+      description:'Smart subscription management with privacy-first design. Track, manage, and optimize all your subscriptions in one place with an elegant, intuitive interface.',
+      role:'Full Stack Developer',
+      link:'https://subex.club/',
+      featured:true },
     { id:1, title:'Creative Portfolio',   category:'Photography',  year:'2024',
       tech:['React','Tailwind CSS','Framer Motion'],
       description:'A photography portfolio showcasing creative work with smooth scroll animations and immersive light transitions.',
@@ -129,6 +141,14 @@ const Projects = () => {
                   >
                     {project.year}
                   </span>
+                  {/* Featured badge */}
+                  {project.featured && (
+                    <span className="absolute top-3 left-3 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider"
+                      style={{ background: a.color, color:'#000' }}
+                    >
+                      ★ Featured
+                    </span>
+                  )}
                 </div>
 
                 {/* Info */}
@@ -142,6 +162,18 @@ const Projects = () => {
                   >
                     <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background:a.color }} />
                     <span className="text-xs text-gray-600">{project.category}</span>
+                    {project.link && (
+                      <a href={project.link} target="_blank" rel="noopener noreferrer"
+                        className="ml-auto flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider transition-colors"
+                        style={{ color: a.color }}
+                        onClick={e => e.stopPropagation()}
+                      >
+                        Visit
+                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                        </svg>
+                      </a>
+                    )}
                   </div>
                 </div>
               </motion.div>
@@ -207,6 +239,22 @@ const Projects = () => {
                     {selected.tech.map(t => <span key={t} className="tag">{t}</span>)}
                   </div>
                 </div>
+
+                {selected.link && (
+                  <a href={selected.link} target="_blank" rel="noopener noreferrer"
+                    className="mt-6 inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 hover:scale-[1.03]"
+                    style={{
+                      background: ACCENT[selected.category].color,
+                      color: '#000',
+                      boxShadow: `0 4px 20px ${ACCENT[selected.category].bg}`,
+                    }}
+                  >
+                    Visit Live
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                    </svg>
+                  </a>
+                )}
               </div>
             </motion.div>
           </motion.div>
