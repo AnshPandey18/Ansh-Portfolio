@@ -12,9 +12,9 @@ import emailjs from '@emailjs/browser'
 //  4. Account → API Keys → copy Public Key
 //  Then replace the three strings below:
 // ─────────────────────────────────────────────────────────────
-const EMAILJS_SERVICE_ID  = 'YOUR_SERVICE_ID'   // e.g. 'service_abc123'
-const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID'  // e.g. 'template_xyz456'
-const EMAILJS_PUBLIC_KEY  = 'YOUR_PUBLIC_KEY'   // e.g. 'a1B2c3D4e5F6g7H8'
+const EMAILJS_SERVICE_ID  = 'service_emvhwup'
+const EMAILJS_TEMPLATE_ID = 'template_6n2n9om'
+const EMAILJS_PUBLIC_KEY  = 'UgXG9iPL50ta_7NBf'
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 20 },
