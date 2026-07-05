@@ -327,7 +327,7 @@ export default function Hero() {
             </svg>
           </motion.button>
           <motion.a
-            href="https://drive.google.com/file/d/1nZgZPh-rr3AO2vpl5zwiAyCGD8UqzzdZ/view"
+            href="https://drive.google.com/file/d/17ykfO1YnEWsmLar1K93r2GawUuoYYx-m/view?usp=drive_link"
             target="_blank" rel="noopener noreferrer"
             className="btn-ghost"
             whileHover={{ scale: 1.04 }}
@@ -347,7 +347,7 @@ export default function Hero() {
             { v: '10+',    l: 'Projects completed' },
             { v: '2+',     l: 'Years of experience' },
             { v: '3+',     l: 'Internships' },
-            { v: 'AIR 94', l: 'Gautam Buddha University Entrance Rank' },
+            { v: 'AIR 94', l: 'Gautam Buddha University Entrance Test Rank' },
           ].map((s, i) => (
             <motion.div
               key={s.l}
