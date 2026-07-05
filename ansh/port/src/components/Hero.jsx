@@ -327,7 +327,7 @@ export default function Hero() {
             </svg>
           </motion.button>
           <motion.a
-            href="https://drive.google.com/file/d/17ykfO1YnEWsmLar1K93r2GawUuoYYx-m/view?usp=drive_link"
+            href="https://drive.google.com/file/d/1_DaxCcJ0jvQzgSewvwVAasrq_yU5Z7Tk/view?usp=drive_link"
             target="_blank" rel="noopener noreferrer"
             className="btn-ghost"
             whileHover={{ scale: 1.04 }}
