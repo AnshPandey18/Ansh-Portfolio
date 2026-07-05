@@ -10,6 +10,32 @@ const fadeUp = (delay = 0) => ({
 
 const PROJECTS = [
   {
+    id: 10,
+    title: 'Research Locker',
+    category: 'Full Stack',
+    year: '2025',
+    tech: ['React', 'Tailwind CSS', 'AI Summaries', 'PayPal API', 'Google Analytics'],
+    desc: 'Save articles, organize PDFs, generate AI summaries, and manage research effortlessly — all in one clean workspace. A full-featured research productivity tool with smart tagging and payment integration.',
+    role: 'Full Stack Developer',
+    image: '/projects/research_locker.jpg',
+    github: '',
+    live: 'https://researchlocker.co/',
+    bg: '#dbeafe',
+  },
+  {
+    id: 11,
+    title: 'SubEx Club',
+    category: 'Full Stack',
+    year: '2025',
+    tech: ['React', 'Tailwind CSS', 'Privacy-First Design', 'Google Analytics'],
+    desc: 'Smart subscription management with privacy-first design. Track, manage, and optimize all your subscriptions in one place with an elegant, intuitive interface.',
+    role: 'Full Stack Developer',
+    image: '/projects/subex_club.jpg',
+    github: '',
+    live: 'https://subex.club/',
+    bg: '#ede9fe',
+  },
+  {
     id: 1,
     title: 'CitySewa',
     category: 'Full Stack',

@@ -347,7 +347,7 @@ export default function Hero() {
             { v: '10+',    l: 'Projects completed' },
             { v: '2+',     l: 'Years of experience' },
             { v: '3+',     l: 'Internships' },
-            { v: 'AIR 94', l: 'GBU Entrance Rank' },
+            { v: 'AIR 94', l: 'Gautam Buddha University Entrance Rank' },
           ].map((s, i) => (
             <motion.div
               key={s.l}

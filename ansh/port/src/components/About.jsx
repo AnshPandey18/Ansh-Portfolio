@@ -96,7 +96,7 @@ export default function About() {
           I blend photography, videography, and polished UI to craft immersive experiences.
           Currently interning at{' '}
           <span style={{ background: '#a3e635', border: '1px solid #000', borderRadius: 4, padding: '1px 6px', fontWeight: 700 }}>
-            ITfosters
+            IT Fosters
           </span>
           {' '}and pursuing BTech CSIT at Dronacharya College, Greater Noida.
         </motion.p>
@@ -207,7 +207,7 @@ export default function About() {
                 { value: '10+',    label: 'Projects Completed' },
                 { value: '2+ yrs', label: 'Experience' },
                 { value: '3+',     label: 'Internships' },
-                { value: 'AIR 94', label: 'GBU Rank' },
+                { value: 'AIR 94', label: 'Gautam Buddha University Enterance Test Rank' },
               ].map((s, i) => (
                 <motion.div
                   key={s.label}

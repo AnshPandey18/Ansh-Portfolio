@@ -100,13 +100,6 @@ export default function Navigation() {
         {/* CTA cluster */}
         <div className="hidden md:flex items-center" style={{ gap: 8, flexShrink: 0 }}>
           <a
-            href="mailto:anshpandey1807@gmail.com"
-            className="btn-ghost"
-            style={{ fontSize: 14, padding: '8px 18px' }}
-          >
-            Sign In
-          </a>
-          <a
             href="#contact"
             onClick={e => { e.preventDefault(); scrollTo('#contact') }}
             className="btn-lime"
