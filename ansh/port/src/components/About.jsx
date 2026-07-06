@@ -223,7 +223,7 @@ export default function About() {
 
             {/* Resume CTA */}
             <a
-              href="https://drive.google.com/file/d/1_DaxCcJ0jvQzgSewvwVAasrq_yU5Z7Tk/view?usp=drive_link"
+              href="https://drive.google.com/file/d/1Tl7dlYxGZFRXhADzaHJy2Nga6HApFO8G/view?usp=drive_link"
               target="_blank" rel="noopener noreferrer"
               className="btn-lime"
               style={{ alignSelf: 'flex-start', fontSize: 15, padding: '11px 26px' }}
