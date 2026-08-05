@@ -258,3 +258,44 @@ body {
 .float-cloud { animation: float-cloud 8s ease-in-out infinite; }
 .float-fish  { animation: float-fish 6s ease-in-out infinite; }
 .float-cloud-slow { animation: float-cloud 12s ease-in-out infinite 2s; }
+
+/* ── Focus visible (accessibility) ────────── */
+:focus-visible {
+  outline: 2px solid #a3e635;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ── Scroll to top button ─────────────────── */
+.scroll-top-btn {
+  position: fixed;
+  bottom: 80px;
+  right: 24px;
+  z-index: 8999;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #fff;
+  border: 1px solid #000;
+  box-shadow: rgb(10,10,13) 2px 2px 0px 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+.scroll-top-btn:hover {
+  transform: translate(-1px,-1px);
+  box-shadow: rgb(10,10,13) 3px 3px 0px 0px;
+}
+
+/* ── Image lazy load fade ─────────────────── */
+img {
+  transition: opacity 0.3s ease;
+}
+img[loading="lazy"] {
+  opacity: 0;
+}
+img[loading="lazy"].loaded {
+  opacity: 1;
+}

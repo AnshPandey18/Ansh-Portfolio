@@ -100,6 +100,14 @@ export default function Navigation() {
         {/* CTA cluster */}
         <div className="hidden md:flex items-center" style={{ gap: 8, flexShrink: 0 }}>
           <a
+            href="https://drive.google.com/file/d/1axm96M5if6WqjTxW1GfP_ZB-29MsK_ov/view?usp=sharing"
+            target="_blank" rel="noopener noreferrer"
+            className="btn-ghost"
+            style={{ fontSize: 14, padding: '8px 18px' }}
+          >
+            Résumé ↗
+          </a>
+          <a
             href="#contact"
             onClick={e => { e.preventDefault(); scrollTo('#contact') }}
             className="btn-lime"
@@ -176,6 +184,9 @@ export default function Navigation() {
           <div style={{ marginTop: 12, paddingTop: 12, borderTop: '1px solid #e5e5e5', display: 'flex', gap: 8 }}>
             <a href="#contact" onClick={e => { e.preventDefault(); scrollTo('#contact'); setOpen(false) }} className="btn-lime" style={{ flex: 1, justifyContent: 'center', fontSize: 14, padding: '8px 16px' }}>
               Book a Call
+            </a>
+            <a href="https://drive.google.com/file/d/1axm96M5if6WqjTxW1GfP_ZB-29MsK_ov/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="btn-ghost" style={{ flex: 1, justifyContent: 'center', fontSize: 14, padding: '8px 16px' }}>
+              Résumé ↗
             </a>
           </div>
         </motion.div>

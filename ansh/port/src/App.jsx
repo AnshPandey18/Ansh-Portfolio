@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { useState, useEffect } from 'react'
 import Navigation  from './components/Navigation'
 import Hero        from './components/Hero'
 import About       from './components/About'
@@ -38,6 +39,37 @@ function FloatingCTA() {
   )
 }
 
+/* ── Scroll to Top ──────────────────────────── */
+function ScrollToTop() {
+  const [visible, setVisible] = useState(false)
+
+  useEffect(() => {
+    const onScroll = () => setVisible(window.scrollY > 400)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  if (!visible) return null
+
+  return (
+    <motion.button
+      className="scroll-top-btn"
+      onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+      initial={{ opacity: 0, scale: 0.7 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.7 }}
+      whileHover={{ scale: 1.1 }}
+      whileTap={{ scale: 0.95 }}
+      aria-label="Scroll to top"
+      title="Back to top"
+    >
+      <svg width="16" height="16" fill="none" stroke="#000" strokeWidth="2.5" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M5 15l7-7 7 7"/>
+      </svg>
+    </motion.button>
+  )
+}
+
 export default function App() {
   return (
     <div style={{ background: '#fff', color: '#000', minHeight: '100vh' }}>
@@ -52,6 +84,7 @@ export default function App() {
       </main>
       <Footer />
       <FloatingCTA />
+      <ScrollToTop />
     </div>
   )
 }

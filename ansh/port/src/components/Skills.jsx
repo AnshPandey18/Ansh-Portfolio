@@ -21,7 +21,8 @@ const CATS = [
   { title: 'Backend',      items: ['Node.js', 'Express.js', 'REST APIs', 'JWT'],        bg: '#fae9ff' },
   { title: 'Database',     items: ['MongoDB', 'MySQL', 'PostgreSQL'],                   bg: '#f5d1fe' },
   { title: 'Dev Tools',    items: ['VS Code', 'GitHub', 'Postman', 'Photoshop', 'Lightroom'], bg: '#b7eaf6' },
-  { title: 'Coursework',   items: ['DBMS', 'OOPS', 'OS', 'Computer Networks'],          bg: '#b9f0c0' },
+  { title: 'Creative',     items: ['Photography', 'Videography', 'Photo Editing', 'Premiere Pro', 'Lightroom'], bg: '#b9f0c0' },
+  { title: 'Coursework',   items: ['DBMS', 'OOPS', 'OS', 'Computer Networks'],          bg: '#fef3c8' },
 ]
 
 const MARQUEE_ITEMS = [

@@ -74,10 +74,27 @@ const PROJECTS = [
     live: 'https://elegantavsolutionmain.vercel.app/',
     bg: '#fef3c8',
   },
+  {
+    id: 12,
+    title: 'Frame With Ansh',
+    category: 'Photography',
+    year: '2024',
+    tech: ['Photography', 'Videography', 'Photo Editing', 'Lightroom', 'Premiere Pro'],
+    desc: 'A personal photography brand capturing events, portraits, and cinematic moments. 3+ years of experience shooting across formats with a distinctive visual style.',
+    role: 'Photographer & Videographer',
+    image: '/projects/framewithansh_collage.png',
+    github: '',
+    live: 'https://www.instagram.com/shooootwithme',
+    bg: '#fae9ff',
+  },
 ]
 
 export default function Projects() {
   const [selected, setSelected] = useState(null)
+  const [filter, setFilter] = useState('All')
+
+  const categories = ['All', 'Full Stack', 'Photography']
+  const filtered = filter === 'All' ? PROJECTS : PROJECTS.filter(p => p.category === filter)
 
   return (
     <section id="projects" style={{ background: '#fff', padding: '80px 0' }}>
@@ -109,14 +126,38 @@ export default function Projects() {
         </motion.h2>
         <motion.p {...fadeUp(0.1)} style={{
           fontWeight: 500, fontSize: 16, color: '#737373', textAlign: 'center',
-          maxWidth: 400, margin: '0 auto 56px',
+          maxWidth: 440, margin: '0 auto 32px',
         }}>
-          A selection of my recent full-stack web developments.
+          A selection of my recent work — full-stack web apps and photography.
         </motion.p>
+
+        {/* Filter tabs */}
+        <motion.div {...fadeUp(0.12)} style={{ display: 'flex', justifyContent: 'center', gap: 8, marginBottom: 48, flexWrap: 'wrap' }}>
+          {categories.map(cat => (
+            <button
+              key={cat}
+              onClick={() => setFilter(cat)}
+              style={{
+                padding: '7px 20px',
+                borderRadius: 100,
+                border: '1px solid #000',
+                background: filter === cat ? '#a3e635' : '#fff',
+                color: '#000',
+                fontWeight: filter === cat ? 700 : 500,
+                fontSize: 14,
+                cursor: 'pointer',
+                boxShadow: filter === cat ? 'rgb(10,10,13) 2px 2px 0px 0px' : 'none',
+                transition: 'all 0.15s ease',
+              }}
+            >
+              {cat}
+            </button>
+          ))}
+        </motion.div>
 
         {/* Project cards */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 20 }}>
-          {PROJECTS.map((p, i) => (
+          {filtered.map((p, i) => (
             <motion.div
               key={p.id}
               {...fadeUp(i * 0.1)}

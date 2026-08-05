@@ -207,7 +207,7 @@ export default function About() {
                 { value: '10+',    label: 'Projects Completed' },
                 { value: '2+ yrs', label: 'Experience' },
                 { value: '3+',     label: 'Internships' },
-                { value: 'AIR 94', label: 'Gautam Buddha University Enterance Test Rank' },
+                { value: 'AIR 94', label: 'Gautam Buddha University Entrance Test Rank' },
               ].map((s, i) => (
                 <motion.div
                   key={s.label}
@@ -223,7 +223,7 @@ export default function About() {
 
             {/* Resume CTA */}
             <a
-              href="https://drive.google.com/file/d/1Tl7dlYxGZFRXhADzaHJy2Nga6HApFO8G/view?usp=drive_link"
+              href="https://drive.google.com/file/d/1axm96M5if6WqjTxW1GfP_ZB-29MsK_ov/view?usp=sharing"
               target="_blank" rel="noopener noreferrer"
               className="btn-lime"
               style={{ alignSelf: 'flex-start', fontSize: 15, padding: '11px 26px' }}
