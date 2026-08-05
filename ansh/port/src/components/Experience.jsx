@@ -10,45 +10,34 @@ const fadeUp = (delay = 0) => ({
 
 const WORK = [
   {
-    id: 'gotechify',
-    title: 'Full Stack Developer',
-    company: 'Gotechify',
+    id: 'gotechfy',
+    title: 'Full Stack Developer Intern',
+    company: 'Gotechfy',
     location: 'Remote',
     period: 'Jun 2026 – Aug 2026',
-    desc: 'Full-stack development at Gotechify. Built and shipped web features across the stack, collaborated closely with product and design teams.',
+    bullets: [
+      'Engineered and shipped subex.club — a full-stack SaaS dashboard using React.js, Node.js/Express, and SQL for relational data modeling.',
+      'Containerized the app with Docker; deployed frontend on Vercel and backend on Render with production env variables and build pipelines.',
+      'Designed and implemented RESTful APIs powering core dashboard functionality with real-time data rendering.',
+      'Structured and optimized SQL database schemas for efficient querying and scalable data management.',
+    ],
     bg: '#fae9ff',
     highlight: true,
   },
   {
-    id: 'itfosters-subex',
-    title: 'Full Stack Developer',
-    company: 'IT Fosters',
-    location: 'Remote',
-    period: 'Jan 2026 – Mar 2026',
-    project: 'Subex',
-    desc: 'Built the Subex platform — smart subscription management with privacy-first design. REST APIs, React frontend, and scalable backend architecture.',
-    bg: '#b9f0c0',
-    highlight: true,
-  },
-  {
     id: 'itfosters-research',
-    title: 'Full Stack Developer',
+    title: 'Full Stack Developer Intern',
     company: 'IT Fosters',
     location: 'Remote',
     period: 'Oct 2025 – Dec 2025',
     project: 'Research Locker',
-    desc: 'Built Research Locker — save articles, organize PDFs, generate AI summaries, and manage research with PayPal payment integration.',
+    bullets: [
+      'Developed backend services for a research SaaS platform supporting academic workflows, user management, and document operations.',
+      'Built 10+ REST API endpoints with authentication middleware, input validation, and centralized error handling.',
+      'Optimized MySQL query performance via indexing and query restructuring, reducing average data retrieval latency by ~35%.',
+      'Containerized backend with Docker and deployed on Render with automated CI/CD pipelines.',
+    ],
     bg: '#b7eaf6',
-    highlight: true,
-  },
-  {
-    id: 'elegant',
-    title: 'Full Stack Developer',
-    company: 'Elegant AV Solution',
-    location: 'Noida',
-    period: 'Jul 2025 – Sep 2025',
-    desc: 'Built full-stack web apps for AV solutions and portable cabin services. Designed DB schemas and REST APIs. Digitized offline business workflows.',
-    bg: '#fef3c8',
     highlight: true,
   },
 ]
@@ -56,10 +45,13 @@ const WORK = [
 const EDU = [
   {
     id: 'btech',
-    title: 'B.Tech — CSIT',
+    title: 'B.Tech — Computer Science & IT',
     company: 'Dronacharya College of Engineering (AKTU)',
     period: '2022 – Present',
-    desc: 'Pursuing BTech CSIT with coursework in DBMS, OOPS, OS, and Computer Networks.',
+    location: 'Greater Noida, India',
+    bullets: [
+      'Pursuing BTech CSIT with coursework in DBMS, OOP, OS, Computer Networks, and System Design.',
+    ],
     bg: '#fef3c8',
   },
   {
@@ -67,7 +59,7 @@ const EDU = [
     title: 'Senior Secondary (XII)',
     company: 'CBSE Board',
     period: '2022',
-    desc: 'Completed with a focus on Science and Mathematics.',
+    bullets: ['Completed with a focus on Science and Mathematics.'],
     bg: '#d2fae5',
   },
   {
@@ -75,7 +67,7 @@ const EDU = [
     title: 'Secondary (X)',
     company: 'CBSE Board',
     period: '2020',
-    desc: 'Completed secondary education.',
+    bullets: ['Completed secondary education.'],
     bg: '#fae9ff',
   },
 ]
@@ -132,7 +124,7 @@ function TimelineCard({ item, i, isWork }) {
         </div>
 
         {/* Company — highlighted */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10, flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12, flexWrap: 'wrap' }}>
           <span style={{
             background: '#000', color: '#a3e635',
             borderRadius: 100, padding: '3px 12px',
@@ -145,7 +137,6 @@ function TimelineCard({ item, i, isWork }) {
               · {item.location}
             </span>
           )}
-          {/* Project badge */}
           {item.project && (
             <span style={{
               background: '#a3e635', border: '1px solid #000', borderRadius: 100,
@@ -157,9 +148,19 @@ function TimelineCard({ item, i, isWork }) {
           )}
         </div>
 
-        <p style={{ fontWeight: 500, fontSize: 14, color: '#333', lineHeight: 1.6 }}>
-          {item.desc}
-        </p>
+        {/* Bullet points */}
+        <ul style={{ margin: 0, padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 7 }}>
+          {item.bullets.map((b, bi) => (
+            <li key={bi} style={{ display: 'flex', gap: 8, alignItems: 'flex-start' }}>
+              <span style={{
+                width: 6, height: 6, borderRadius: '50%',
+                background: isWork ? '#15803d' : '#0369a1',
+                flexShrink: 0, marginTop: 6,
+              }} />
+              <span style={{ fontWeight: 500, fontSize: 14, color: '#333', lineHeight: 1.6 }}>{b}</span>
+            </li>
+          ))}
+        </ul>
       </motion.div>
     </motion.div>
   )

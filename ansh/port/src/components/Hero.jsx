@@ -246,7 +246,7 @@ export default function Hero() {
         {/* Eyebrow chip */}
         <motion.div {...fadeUp(0.08)} className="section-eyebrow">
           <span className="chip" style={{ fontSize: 13 }}>
-            ✦ Photographer · Developer · Videographer · Speaker
+            ✦ MERN Developer · Photographer · Videographer · Speaker
           </span>
         </motion.div>
 
@@ -344,10 +344,10 @@ export default function Hero() {
           style={{ display:'flex', justifyContent:'center', flexWrap:'wrap' }}
         >
           {[
-            { v: '10+',    l: 'Projects completed' },
+            { v: '5+',     l: 'Projects completed' },
             { v: '2+',     l: 'Years of experience' },
-            { v: '3+',     l: 'Internships' },
-            { v: 'AIR 94', l: 'Gautam Buddha University Entrance Test Rank' },
+            { v: '2',      l: 'Internships' },
+            { v: 'AIR 94', l: 'Gautam Buddha University Entrance Test' },
           ].map((s, i) => (
             <motion.div
               key={s.l}

@@ -8,28 +8,31 @@ const fadeUp = (delay = 0) => ({
 })
 
 const CORE = [
-  { name: 'Development',   pct: 90, bg: '#b9f0c0' },
-  { name: 'Photography',   pct: 90, bg: '#b7eaf6' },
-  { name: 'Videography',   pct: 85, bg: '#fae9ff' },
-  { name: 'Photo Editing', pct: 88, bg: '#fef3c8' },
+  { name: 'Full Stack Dev',  pct: 92, bg: '#b9f0c0' },
+  { name: 'Photography',     pct: 90, bg: '#b7eaf6' },
+  { name: 'Videography',     pct: 85, bg: '#fae9ff' },
+  { name: 'Photo Editing',   pct: 88, bg: '#fef3c8' },
   { name: 'Public Speaking', pct: 85, bg: '#f5d1fe' },
 ]
 
 const CATS = [
-  { title: 'Languages',    items: ['C', 'C++', 'Java', 'JavaScript', 'Python'],         bg: '#fef3c8' },
-  { title: 'Frontend',     items: ['HTML5', 'CSS3', 'React.js', 'Tailwind CSS'],        bg: '#d2fae5' },
-  { title: 'Backend',      items: ['Node.js', 'Express.js', 'REST APIs', 'JWT'],        bg: '#fae9ff' },
-  { title: 'Database',     items: ['MongoDB', 'MySQL', 'PostgreSQL'],                   bg: '#f5d1fe' },
-  { title: 'Dev Tools',    items: ['VS Code', 'GitHub', 'Postman', 'Photoshop', 'Lightroom'], bg: '#b7eaf6' },
-  { title: 'Creative',     items: ['Photography', 'Videography', 'Photo Editing', 'Premiere Pro', 'Lightroom'], bg: '#b9f0c0' },
-  { title: 'Coursework',   items: ['DBMS', 'OOPS', 'OS', 'Computer Networks'],          bg: '#fef3c8' },
+  { title: 'Languages',       items: ['Java', 'JavaScript', 'C++', 'Python', 'C'],                                              bg: '#fef3c8' },
+  { title: 'Frontend',        items: ['React.js', 'Next.js', 'Vue.js', 'HTML5', 'CSS3', 'Tailwind CSS', 'Responsive Design'],  bg: '#d2fae5' },
+  { title: 'Backend',         items: ['Node.js', 'Express.js', 'REST APIs', 'JWT', 'JDBC', 'Core Java'],                       bg: '#fae9ff' },
+  { title: 'Databases',       items: ['MySQL', 'MongoDB', 'PostgreSQL'],                                                        bg: '#f5d1fe' },
+  { title: 'Cloud & DevOps',  items: ['Docker', 'AWS EC2', 'AWS S3', 'Render', 'Vercel', 'CI/CD'],                             bg: '#b7eaf6' },
+  { title: 'Dev Tools',       items: ['Git', 'GitHub', 'Postman', 'IntelliJ IDEA', 'VS Code'],                                 bg: '#b9f0c0' },
+  { title: 'CS Fundamentals', items: ['DSA', 'DBMS', 'OS', 'Computer Networks', 'System Design'],                              bg: '#fef3c8' },
+  { title: 'Creative',        items: ['Photography', 'Videography', 'Photo Editing', 'Lightroom', 'Premiere Pro'],             bg: '#f5d1fe' },
 ]
 
 const MARQUEE_ITEMS = [
-  'React.js', 'Node.js', 'MongoDB', 'MySQL', 'Tailwind CSS', 'JavaScript',
-  'HTML5', 'CSS3', 'Python', 'Java', 'C++', 'REST APIs', 'Git', 'Photoshop', 'Lightroom', 'Premiere Pro',
-  'React.js', 'Node.js', 'MongoDB', 'MySQL', 'Tailwind CSS', 'JavaScript',
-  'HTML5', 'CSS3', 'Python', 'Java', 'C++', 'REST APIs', 'Git', 'Photoshop', 'Lightroom', 'Premiere Pro',
+  'React.js', 'Next.js', 'Node.js', 'MongoDB', 'MySQL', 'Docker', 'AWS',
+  'Tailwind CSS', 'JavaScript', 'Java', 'C++', 'REST APIs', 'Git', 'Vercel', 'Render',
+  'Vue.js', 'PostgreSQL', 'CI/CD', 'Lightroom', 'Premiere Pro',
+  'React.js', 'Next.js', 'Node.js', 'MongoDB', 'MySQL', 'Docker', 'AWS',
+  'Tailwind CSS', 'JavaScript', 'Java', 'C++', 'REST APIs', 'Git', 'Vercel', 'Render',
+  'Vue.js', 'PostgreSQL', 'CI/CD', 'Lightroom', 'Premiere Pro',
 ]
 
 function SkillBar({ name, pct, bg, delay }) {

@@ -23,7 +23,7 @@ const PASTEL_CARDS = [
   {
     bg: '#fef3c8',
     title: 'AIR 94',
-    body: 'All India Rank 94 in Gautam Buddha University Entrance Test.',
+    body: 'All India Rank 94 in Gautam Buddha University Entrance Examination, among thousands of candidates.',
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#000" strokeWidth="1.5">
         <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
@@ -31,9 +31,19 @@ const PASTEL_CARDS = [
     ),
   },
   {
+    bg: '#b9f0c0',
+    title: 'Hackathon Runner-up',
+    body: 'Runner-up at Code4Cause Hackathon — building impactful solutions under time pressure.',
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#000" strokeWidth="1.5">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+      </svg>
+    ),
+  },
+  {
     bg: '#d2fae5',
     title: 'Lead Speaker',
-    body: 'Two-time District Level Speaker (2024 & 2025). Comfortable on any stage.',
+    body: 'Two-time District Level Speaker (2024 & 2025), representing college in inter-district competitions.',
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#000" strokeWidth="1.5">
         <path strokeLinecap="round" strokeLinejoin="round" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 016 0v6a3 3 0 01-3 3z"/>
@@ -43,7 +53,7 @@ const PASTEL_CARDS = [
   {
     bg: '#fae9ff',
     title: 'Photographer',
-    body: '3+ years capturing moments — events, portraits, and cinematic videos.',
+    body: '3+ years capturing events, portraits, and cinematic videos with a distinctive visual style.',
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#000" strokeWidth="1.5">
         <path strokeLinecap="round" strokeLinejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
@@ -93,12 +103,12 @@ export default function About() {
           margin: '0 auto 64px', lineHeight: 1.56,
           letterSpacing: '-0.108px',
         }}>
-          I blend photography, videography, and polished UI to craft immersive experiences.
-          Currently interning at{' '}
+          Full Stack Developer (MERN) with internships and production-grade projects.
+          Currently at{' '}
           <span style={{ background: '#a3e635', border: '1px solid #000', borderRadius: 4, padding: '1px 6px', fontWeight: 700 }}>
-            IT Fosters
+            Gotechfy
           </span>
-          {' '}and pursuing BTech CSIT at Dronacharya College, Greater Noida.
+          {' '}· pursuing BTech CSIT at Dronacharya College, Greater Noida.
         </motion.p>
 
         {/* 2-col: portrait + bio */}
@@ -190,24 +200,26 @@ export default function About() {
                 Who I am
               </h3>
               <p style={{ fontWeight: 500, fontSize: 16, color: '#333', lineHeight: 1.7, letterSpacing: '-0.096px' }}>
-                I'm <strong>Ansh Pandey</strong> — a creative professional who bridges the gap between
-                visual artistry and modern web technology. I focus on clean composition,
-                deliberate motion, and user-centered design that communicates and converts.
+                I'm <strong>Ansh Pandey</strong> — a Full Stack Developer (MERN) with hands-on internship
+                experience delivering production-ready REST APIs, SaaS dashboards, and scalable applications.
+                I also bring a creative edge through photography and videography, bridging
+                technical precision with visual storytelling.
               </p>
             </div>
 
             <p style={{ fontWeight: 500, fontSize: 15, color: '#555', lineHeight: 1.7, borderLeft: '3px solid #a3e635', paddingLeft: 16 }}>
-              "Design is not just what it looks like — design is how it works."
-              I build things that look great and actually function at a high level.
+              Skilled in React.js, Next.js, Node.js, MySQL, MongoDB, and Docker — with
+              hands-on experience deploying on AWS (EC2, S3), Render, and Vercel.
+              Strong foundation in DSA, System Design, and CS fundamentals.
             </p>
 
             {/* Stat cards */}
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
               {[
-                { value: '10+',    label: 'Projects Completed' },
+                { value: '5+',     label: 'Projects Completed' },
                 { value: '2+ yrs', label: 'Experience' },
-                { value: '3+',     label: 'Internships' },
-                { value: 'AIR 94', label: 'Gautam Buddha University Entrance Test Rank' },
+                { value: '2',      label: 'Internships' },
+                { value: 'AIR 94', label: 'Gautam Buddha University Entrance Test' },
               ].map((s, i) => (
                 <motion.div
                   key={s.label}
